@@ -15,10 +15,10 @@ import java.util.ArrayList;
 public class Recinto
 {
     private int numero;
-    private String localizacao;
+    private String localizacao;     //??? andar?
     private int capacidade;
     private String tipo;            //define o tipo da sala, lab, aula, auditorio,etc
-    ArrayList<Recurso> recursos;     //lista de recursos da sala
+    private ArrayList<Recurso> recursos;     //lista de recursos da sala
 
     public Recinto() {
     }

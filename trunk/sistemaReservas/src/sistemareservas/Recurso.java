@@ -11,10 +11,10 @@ package sistemareservas;
  */
 public class Recurso {
     private String nome;
-    private int quantidade;
+    private int quantidade;    
+    private String comentarios;
     //em 'comentarios' fica qquer informacao extra sobre o recurso da sala em particular
     //ex: computador -> intel core i7 4ghz OC, 12gb memoria, 1500gb de hd
-    private String comentarios;
 
 
     public Recurso() {

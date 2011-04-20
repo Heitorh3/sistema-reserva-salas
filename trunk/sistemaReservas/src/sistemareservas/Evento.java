@@ -20,13 +20,13 @@ public class Evento
     private String finalidade;
     private Pessoa responsavel;
     private Pessoa solicitante;
-    private int codSala;    //--referencia externa--
+    private int codSala;    //--referencia externa--    
+    private char repeticao;
     //repeticao recebera os seguintes valores
     //d - somente no dia
     //s - semanalmente
     //q - quinzenalmente
     //m - mensalmente
-    private char repeticao;
 
     public Evento() {
     }

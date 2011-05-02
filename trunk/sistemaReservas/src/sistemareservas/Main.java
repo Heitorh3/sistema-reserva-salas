@@ -5,10 +5,9 @@
 
 package sistemareservas;
 
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -21,7 +20,13 @@ public class Main {
      */
     public static void main(String[] args)
     {
-        /*
+
+    }
+        
+}
+        
+        
+        /*  PROVAVEL FLUXO:
          * ArrayList<Pessoa> usuariosCadastrados -> guarda os usuario cadastrados no sistema
          * deve permitir login logoff e avisar qndo o usuario nao tem permissao para fazer determinada tarefa
          * ArrayList<Evento> eventos-> guarda os eventos gerados pelo usuario atraves do formulario
@@ -46,7 +51,4 @@ public class Main {
            - a relação de recursos de uma determinada sala:
          * agora procura exclusivamento no ArrayList salas e mostra os dados pedidos
          * --ArrayList ou container mais apropriado, se tiver um melhor.
-         */
-    }
-
-}
+   */

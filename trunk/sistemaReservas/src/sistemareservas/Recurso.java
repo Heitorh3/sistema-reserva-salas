@@ -9,13 +9,17 @@ package sistemareservas;
  *
  * @author 0213101
  */
-public class Recurso {
-    private String nome;
-    private int quantidade;    
+public class Recurso
+{
+    private String nome;            //nome q identifica o recurso
+    private int quantidade;         //quantidade deste recurso
     private String comentarios;
-    //em 'comentarios' fica qquer informacao extra sobre o recurso da sala em particular
-    //ex: computador -> intel core i7 4ghz OC, 12gb memoria, 1500gb de hd
-
+    /* em 'comentarios' fica qquer informacao extra sobre o recurso da sala em particular
+    ex:
+    nome: computador
+    quantidade: 30
+    comentarios: -intel core i7 4ghz OC, 12gb memoria, 1500gb de hd
+    */
 
     public Recurso() {
     }
@@ -52,7 +56,20 @@ public class Recurso {
         this.quantidade = quantidade;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Recurso{" + "nome=" + nome + "quantidade=" + quantidade + "comentarios=" + comentarios + '}';
+    }
 
 
 

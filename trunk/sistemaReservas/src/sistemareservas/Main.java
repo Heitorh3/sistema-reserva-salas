@@ -22,6 +22,8 @@ public class Main {
     public static void main(String[] args)
     {
         /*
+         * ArrayList<Pessoa> usuariosCadastrados -> guarda os usuario cadastrados no sistema
+         * deve permitir login logoff e avisar qndo o usuario nao tem permissao para fazer determinada tarefa
          * ArrayList<Evento> eventos-> guarda os eventos gerados pelo usuario atraves do formulario
          * ArrayList<Recinto> salas -> recebe todas as salas na primeira carga
          * todas as consultas, tanto de sala qnto de eventos passa pelo ArrayList<Evento>

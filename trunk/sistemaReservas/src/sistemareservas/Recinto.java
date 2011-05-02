@@ -14,11 +14,11 @@ import java.util.ArrayList;
  */
 public class Recinto
 {
-    private int numero;
-    private String localizacao;     //??? andar?
-    private int capacidade;
-    private String tipo;            //define o tipo da sala, lab, aula, auditorio,etc
-    private ArrayList<Recurso> recursos;     //lista de recursos da sala
+    private int numero;                     //numero da sala se tiver, 0 se nao tiver num
+    private String localizacao;             //??? andar?
+    private int capacidade;                 //qntas pessoas a sala comporta
+    private String tipo;                    //define o tipo da sala, lab, aula, auditorio,etc
+    private ArrayList<Recurso> recursos;    //lista de recursos da sala
 
     public Recinto() {
     }
@@ -31,8 +31,6 @@ public class Recinto
         this.tipo = tipo;
         this.recursos = recursos;
     }
-
-
 
     public int getCapacidade() {
         return capacidade;
@@ -79,6 +77,16 @@ public class Recinto
         return "Recinto{" + "numero=" + numero + "localizacao=" + localizacao +
                "capacidade=" + capacidade + "tipo=" + tipo +
                "recursos=" + recursos + '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
 

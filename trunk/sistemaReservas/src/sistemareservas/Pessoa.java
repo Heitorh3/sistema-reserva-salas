@@ -18,19 +18,42 @@ public class Pessoa
     private String cargo;
     private String login;
     private String senha;
+    private boolean admin;          //admin marca 'false' se a pessoa eh um usuario comum
+                                    //ou 'true' se eh admistrador.
+    private boolean bloqueado;      //marca se o usuario esta bloqueado pelo admin
+                                    //apenas admins podem mudar esta variavel
+                                    //admin nao pode se bloquear
+
 
     public Pessoa() {
     }
 
-    public Pessoa(String nomePessoa, String email, String telefone,
-                  String cargo, String login, String senha)
-    {
+    public Pessoa(String nomePessoa, String email, String telefone, String cargo, String login, String senha, boolean admin, boolean bloqueado) {
         this.nomePessoa = nomePessoa;
         this.email = email;
         this.telefone = telefone;
         this.cargo = cargo;
         this.login = login;
         this.senha = senha;
+        this.admin = admin;
+        this.bloqueado = bloqueado;
+    }
+
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
+    public boolean isBloqueado() {
+        return bloqueado;
+    }
+
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public boolean isAdmin() {
+        return admin;
     }
 
     public String getCargo() {
@@ -86,6 +109,16 @@ public class Pessoa
         return "Pessoa{" + "nomePessoa=" + nomePessoa + "email=" + email +
                "telefone=" + telefone + "cargo=" + cargo + "login=" + login +
                "senha=" + senha + '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
 

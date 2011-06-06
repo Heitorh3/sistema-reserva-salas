@@ -1,0 +1,33 @@
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
+    <property name="hibernate.connection.url">jdbc:derby://localhost:1527/sample</property>
+    <property name="hibernate.connection.username">app</property>
+    <property name="hibernate.connection.password">app</property>
+  </session-factory>
+</hibernate-configuration>
+
+ -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <!--modificar para acessar o meu banco de dados -->
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/SistemaReserva</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.use_outer_join">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <!-- classes mapeadas, modificar para as minhas -->
+    <mapping class="classes.Pessoa"/>
+    <mapping class="classes.Recinto"/>
+    <mapping class="classes.Recurso"/>
+    <mapping class="classes.Reserva"/>
+  </session-factory>
+</hibernate-configuration>

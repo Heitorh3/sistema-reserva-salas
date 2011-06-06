@@ -5,7 +5,7 @@
 
 package gui.paineis;
 
-import classes.Reserva;
+import entidades.Reserva;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;

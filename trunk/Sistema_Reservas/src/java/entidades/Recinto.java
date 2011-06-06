@@ -4,7 +4,7 @@
  * que especifica se eh sala de aula, laboratorio, auditorio, etc.
  */
 
-package classes;
+package entidades;
 
 import java.util.ArrayList;
 import javax.persistence.Column;

@@ -9,7 +9,7 @@ package gui;
 import gui.paineis.PainelDisplayReservas;
 import gui.paineis.PainelBotoes;
 import gui.paineis.PainelCalendario;
-import classes.Reserva;
+import entidades.Reserva;
 import com.vaadin.Application;
 import com.vaadin.ui.*;
 import java.util.ArrayList;

@@ -5,7 +5,7 @@
 
 package gui.paineis;
 
-import classes.Reserva;
+import entidades.Reserva;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.event.MouseEvents.ClickListener;
 import com.vaadin.ui.Alignment;

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package classes;
+package entidades;
 
 import org.hibernate.FlushMode;
 import org.hibernate.Session;

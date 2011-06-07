@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 
 /**
  *
@@ -140,6 +141,7 @@ public class PainelCalendario extends Panel{
         SimpleDateFormat sdf = new SimpleDateFormat("dd--MM--yyyy");
         System.out.println("Today             : " + sdf.format(data));
         System.out.println("First Day of Month: " + sdf.format(primeiroDiaMes));
+        //cal.set(Calendar.MONTH,2);
         int primeiroDiaSemana = cal.get(Calendar.DAY_OF_WEEK);
         String dia = "oi";
         int colunaDestino = 0;
@@ -238,7 +240,7 @@ public class PainelCalendario extends Panel{
         //precisa de um case pra v q mes esta e qntos dias este mes tem
         //ou parse o dateFormat e pega o DD maximo
         //int diasMes = tabelaDiasMes.get(1);
-        int diasMes = Integer.parseInt((String)(tabelaDiasMes.get(6)));
+        int diasMes = Integer.parseInt((String)(tabelaDiasMes.get(cal.get(Calendar.MONTH)+1)));
         //caixaMeses.setValue(tabelaMeses.get(cal.get(Calendar.MONTH) +1));//funciona
         for (int i = 0; i < diasMes; i++)
         {
@@ -246,7 +248,8 @@ public class PainelCalendario extends Panel{
             pd.listener = new EventoPassaReservas();
             pd.addListener(pd.listener);
             diasLeiaute.addComponent(pd,colunaDestino,linhaDestino);
-            if (colunaDestino < 6) colunaDestino++;
+            if (colunaDestino < 6)
+                colunaDestino++;
             else
             {
                 colunaDestino = 0;
@@ -366,7 +369,8 @@ public class PainelCalendario extends Panel{
         public void buttonClick(Button.ClickEvent event)
         {
             Reserva valor = (Reserva) listaReservas.getValue();
-            System.out.println(valor.toString());
+            if (valor != null)
+                System.out.println(valor.toString());
         }
 
     }
@@ -377,7 +381,7 @@ public class PainelCalendario extends Panel{
         @Override
         public void buttonClick(Button.ClickEvent event)
         {
-            //repete o for de criar os objetos e coloca o mes padrao para o novo mes retirado do NativeSelect
+            listaReservas.removeAllItems();
             int colunaDestino = 0;
             int linhaDestino = 1;
             System.out.println("Mes na caixa de meses: " + caixaMeses.getValue());
@@ -398,75 +402,86 @@ public class PainelCalendario extends Panel{
 
             Calendar cal = new GregorianCalendar();
             cal.set(Calendar.MONTH, numMes);
-            System.out.println(cal.get(Calendar.MONTH));
-
-
-
-
-            //SimpleDateFormat sdf = new SimpleDateFormat("dd--MM--yyyy");
-            /*
+            cal.set(Calendar.DAY_OF_MONTH,1);            
             int primeiroDiaSemana = cal.get(Calendar.DAY_OF_WEEK);
-            switch (primeiroDiaSemana)
-        {
-            case 1:
-            {
-                dia = "Domingo";
-                colunaDestino = 6;
-            }
-            break;
-            case 2:
-            {
-                dia = "Segunda";
-                       colunaDestino = 0;
-            }
-            break;
-            case 3:
-            {
-                dia = "Terça";
-                colunaDestino = 1;
-            }
-            break;
-            case 4:
-            {
-                dia = "Quarta";
-                colunaDestino = 2;
-            }
-            break;
-            case 5:
-            {
-                dia = "Quinta";
-                colunaDestino = 3;
-            }
-            break;
-            case 6:
-            {
-                dia = "Sexta";
-                colunaDestino = 4;
-            }
-            break;
-            case 7:
-            {
-                dia = "Sábado";
-                colunaDestino = 5;
-            }
-            break;
-        }
-            */
+            System.out.println("primeiroDiaSemana: " + primeiroDiaSemana);
 
-            /*
+            switch (primeiroDiaSemana)
+            {
+                case 1:
+                {
+                    colunaDestino = 6;
+                }
+                break;
+                case 2:
+                {
+                     colunaDestino = 0;
+                }
+                break;
+                case 3:
+                {
+                    colunaDestino = 1;
+                }
+                break;
+                case 4:
+                {
+                    colunaDestino = 2;
+                }
+                break;
+                case 5:
+                {
+                    colunaDestino = 3;
+                }
+                break;
+                case 6:
+                {
+                    colunaDestino = 4;
+                }
+                break;
+                case 7:
+                {
+                    colunaDestino = 5;
+                }
+                break;
+            }
+            System.out.println("" + colunaDestino);
+
+
+            int diasMes = Integer.parseInt((String)(tabelaDiasMes.get(cal.get(Calendar.MONTH)+1)));
+            System.out.println(diasMes);
+
+            diasLeiaute.removeAllComponents();
+            diasLeiaute.addComponent(seg,0,0);
+            diasLeiaute.setComponentAlignment(seg, Alignment.TOP_CENTER);
+            diasLeiaute.addComponent(ter,1,0);
+            diasLeiaute.setComponentAlignment(ter, Alignment.TOP_CENTER);
+            diasLeiaute.addComponent(qua,2,0);
+            diasLeiaute.setComponentAlignment(qua, Alignment.TOP_CENTER);
+            diasLeiaute.addComponent(qui,3,0);
+            diasLeiaute.setComponentAlignment(qui, Alignment.TOP_CENTER);
+            diasLeiaute.addComponent(sex,4,0);
+            diasLeiaute.setComponentAlignment(sex, Alignment.TOP_CENTER);
+            diasLeiaute.addComponent(sab,5,0);
+            diasLeiaute.setComponentAlignment(sab, Alignment.TOP_CENTER);
+            diasLeiaute.addComponent(dom,6,0);
+            diasLeiaute.setComponentAlignment(dom, Alignment.TOP_CENTER);
+
             for (int i = 0; i < diasMes; i++)
             {
                 PainelDia pd = new PainelDia(new ArrayList(),i+1);
+                pd.listener = new EventoPassaReservas();
+                pd.addListener(pd.listener);
                 diasLeiaute.addComponent(pd,colunaDestino,linhaDestino);
-                if (colunaDestino < 6) colunaDestino++;
-            else
-            {
-                colunaDestino = 0;
-                linhaDestino++;
+                diasLeiaute.requestRepaint();
+                if (colunaDestino < 6)
+                    colunaDestino++;
+                else
+                {
+                    colunaDestino = 0;
+                    linhaDestino++;
+                }
             }
-
-            }
-           */
+           
         }
     }
 }

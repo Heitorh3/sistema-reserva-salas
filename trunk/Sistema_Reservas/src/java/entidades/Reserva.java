@@ -1,17 +1,5 @@
 
- /**
- * @see A Classe Reserva contém os dados necessários para efetuar a reserva de uma sala
- * em determinado dia. A reserva pode repetir-se periódicamente, pode ser alocada,
- * editada e deletada pelo administrador. Somente o admin ou usuários autorizados
- * podem criar reservas.
- * A classe Reserva sera a mais importante do programa. Atraves dela que teremos
- * acesso a todos os elementos do programa e todas as consultas serao feitas
- * lendo os eventos e fazendo referencias aos Recintos e Pessoas.
- *
- *
- * @autor autor Vinicius Valvassori
- * @version
- */
+ 
 
 package entidades;
 
@@ -24,8 +12,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
+ * A Classe Reserva contém os dados necessários para efetuar a reserva de uma sala
+ * em determinado dia. A reserva pode repetir-se periódicamente. O administrador
+ * tem privilégios para editar, adicionar e excluir reservas.<p>
+ * Somente o admin ou usuários autorizados podem editar as reservas.<p>
+ * A classe Reserva será a mais importante do programa. Atraves dela que teremos
+ * acesso a todos os dados para consulta.
  *
- * @author 0213101
+ *
+ * @autor Vinicius
+ * @version 1.1
  */
 @Entity
 @Table

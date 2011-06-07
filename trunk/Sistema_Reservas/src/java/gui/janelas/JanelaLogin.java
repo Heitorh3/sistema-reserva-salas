@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package gui;
+package gui.janelas;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;

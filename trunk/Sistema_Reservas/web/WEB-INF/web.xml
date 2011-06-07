@@ -5,7 +5,7 @@
         <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
         <init-param>
             <param-name>application</param-name>
-            <param-value>gui.JanelaPrincipal</param-value>
+            <param-value>gui.janelas.JanelaPrincipal</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

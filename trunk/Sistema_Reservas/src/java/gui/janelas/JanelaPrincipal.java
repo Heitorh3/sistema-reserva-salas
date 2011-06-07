@@ -4,7 +4,7 @@
  * Created on 11 de Maio de 2011, 09:21
  */
  
-package gui;
+package gui.janelas;
 
 import gui.paineis.PainelDisplayReservas;
 import gui.paineis.PainelBotoes;
@@ -34,8 +34,6 @@ public class JanelaPrincipal extends Application {
          */
         ArrayList<Reserva> reservas = new ArrayList();  //AQUI VAI TODOS OS EVENTOS Q VIRAO DO BD
 
-        Date data = new Date();
-
 
         
         //Calendar calendAtual = new GregorianCalendar();
@@ -59,15 +57,15 @@ public class JanelaPrincipal extends Application {
 
         
         mainLayout1.addComponent(new PainelBotoes(mainWindow));
-        mainLayout2.addComponent(new PainelCalendario(reservas,Calendar.MONTH));
-        mainLayout2.addComponent(new PainelDisplayReservas(mainWindow));
-        
+        mainLayout2.addComponent(new PainelCalendario(reservas,mainWindow));
+        //mainLayout2.addComponent(new PainelDisplayReservas(mainWindow));
+        //PainelCalendario pc = new PainelCalendario(reservas,mainWindow);
+        //pc.
 
         setMainWindow(mainWindow);
 
         mainWindow.addComponent(mainLayout1);
-        mainWindow.addComponent(mainLayout2);
-        
+        mainWindow.addComponent(mainLayout2);        
     }
 
     

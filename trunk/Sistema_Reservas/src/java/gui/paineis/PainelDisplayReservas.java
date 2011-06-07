@@ -20,21 +20,16 @@ import java.util.ArrayList;
 public class PainelDisplayReservas extends Panel {
     ListSelect listaReservas;
     VerticalLayout leiaute;
-    Button botaoEditar;
-    Button botaoExcluir;
-    Button botaoNovaReserva;
+    
     Window win;
 
     public PainelDisplayReservas(Window win)
     {
         this.win = win;
-        botaoNovaReserva = new Button();
-        botaoNovaReserva.setCaption("Nova Reserva");
-        botaoNovaReserva.addListener(new EventoNovaReserva());
+        
 
         //Label l = new Label("Reservas");
-        botaoEditar = new Button("Editar Reserva");
-        botaoExcluir = new Button("Excluir Reserva");
+        
         leiaute = new VerticalLayout();
         ArrayList c = new ArrayList();
         c.add(new Integer(7));
@@ -43,22 +38,11 @@ public class PainelDisplayReservas extends Panel {
         listaReservas.setMultiSelect(false);
         listaReservas.setNullSelectionAllowed(false);
         leiaute.addComponent(listaReservas);
-        leiaute.addComponent(botaoNovaReserva);
-        leiaute.addComponent(botaoEditar);
-        leiaute.addComponent(botaoExcluir);
+        
         
         this.addComponent(leiaute);
     }
 
-    private class EventoNovaReserva implements Button.ClickListener
-    {
-    @Override
-        public void buttonClick(Button.ClickEvent event)
-        {
-            FormNovaReserva NR = new FormNovaReserva();
-            win.addWindow(NR);
-        }
-
-    }
+    
 
 }

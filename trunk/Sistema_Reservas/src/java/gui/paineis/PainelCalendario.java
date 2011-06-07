@@ -5,14 +5,20 @@
 
 package gui.paineis;
 
+import com.vaadin.event.MouseEvents.ClickEvent;
+import com.vaadin.event.MouseEvents.ClickListener;
 import entidades.Reserva;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
+import gui.formularios.FormNovaReserva;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,8 +33,10 @@ import java.util.Iterator;
  */
 public class PainelCalendario extends Panel{
 
-    HorizontalLayout lCab;
-    GridLayout leiaute;
+    HorizontalLayout mainLeiaute;
+    HorizontalLayout topoLeiaute;
+    VerticalLayout listaLeiaute;
+    GridLayout diasLeiaute;
     private ArrayList<PainelDia> paineisMes;
     private int numMes;
     Label seg = new Label("SEG");
@@ -39,17 +47,36 @@ public class PainelCalendario extends Panel{
     Label sab = new Label("SAB");
     Label dom = new Label("DOM");
     NativeSelect caixaMeses;
-    Button botao;
+    Button botaoMudarMes;
     HashMap tabelaMeses;
     HashMap tabelaDiasMes;
+    Window win;
+    ListSelect listaReservas;
+    Button botaoEditar;
+    Button botaoExcluir;
+    Button botaoNovaReserva;
 
-    public PainelCalendario(ArrayList<Reserva> reservas,int mes)
+
+
+    public PainelCalendario(ArrayList<Reserva> reservas, Window win)
     {
         /*
          * O HashMap tabelaMeses mantem o par numero do mes -> nome do mes
          * sera usado para pegar o nome do mes no calendario e pegar o dia do
          * mes quando se obtem o nome da caixaMeses
          */
+        listaReservas = new ListSelect("Lista de Reservas");
+        botaoEditar = new Button("Editar Reserva");
+        botaoEditar.addListener(new EventoEditarReserva());
+        botaoExcluir = new Button("Excluir Reserva");
+        botaoNovaReserva = new Button("Nova Reserva");
+        botaoNovaReserva.addListener(new EventoNovaReserva());
+
+
+
+
+
+        this.win = win;
         tabelaMeses = new HashMap();
         tabelaMeses.put(new Integer(1),"Janeiro");
         tabelaMeses.put(new Integer(2),"Fevereiro");
@@ -86,8 +113,9 @@ public class PainelCalendario extends Panel{
         System.out.println(tabelaDiasMes.toString());
 
 
-        //este HL serve pra alinhar a caixa de meses e o botao de mudar mes
-        lCab = new HorizontalLayout();
+        //este HL serve pra alinhar a caixa de meses e o botaoMudarMes de mudar mes
+        mainLeiaute = new HorizontalLayout();
+        topoLeiaute = new HorizontalLayout();
 
         //string com o nome dos meses para preencher o NativeSelect
         String[] meses = {
@@ -174,8 +202,8 @@ public class PainelCalendario extends Panel{
 
 
         
-        botao = new Button("Trocar Mes");
-        botao.addListener(new EventoTrocaMes());
+        botaoMudarMes = new Button("Trocar Mes");
+        botaoMudarMes.addListener(new EventoTrocaMes());
         caixaMeses.setNullSelectionAllowed(false); //nao funça????
         caixaMeses.setValue(new Integer(3));
         //Label labelMes = new Label(Integer.toString(cal.get(Calendar.MONTH)+1)); // aki cai num case pra ve o nº do mes, axo q vai uma variavel global
@@ -187,24 +215,24 @@ public class PainelCalendario extends Panel{
         
 
 
-        leiaute = new GridLayout(7,7);
+        diasLeiaute = new GridLayout(7,7);
 
         //seg.setWidth("100");
         //seg.setHeight("100");
-        leiaute.addComponent(seg,0,0);
-        leiaute.setComponentAlignment(seg, Alignment.TOP_CENTER);
-        leiaute.addComponent(ter,1,0);
-        leiaute.setComponentAlignment(ter, Alignment.TOP_CENTER);
-        leiaute.addComponent(qua,2,0);
-        leiaute.setComponentAlignment(qua, Alignment.TOP_CENTER);
-        leiaute.addComponent(qui,3,0);
-        leiaute.setComponentAlignment(qui, Alignment.TOP_CENTER);
-        leiaute.addComponent(sex,4,0);
-        leiaute.setComponentAlignment(sex, Alignment.TOP_CENTER);
-        leiaute.addComponent(sab,5,0);
-        leiaute.setComponentAlignment(sab, Alignment.TOP_CENTER);
-        leiaute.addComponent(dom,6,0);
-        leiaute.setComponentAlignment(dom, Alignment.TOP_CENTER);
+        diasLeiaute.addComponent(seg,0,0);
+        diasLeiaute.setComponentAlignment(seg, Alignment.TOP_CENTER);
+        diasLeiaute.addComponent(ter,1,0);
+        diasLeiaute.setComponentAlignment(ter, Alignment.TOP_CENTER);
+        diasLeiaute.addComponent(qua,2,0);
+        diasLeiaute.setComponentAlignment(qua, Alignment.TOP_CENTER);
+        diasLeiaute.addComponent(qui,3,0);
+        diasLeiaute.setComponentAlignment(qui, Alignment.TOP_CENTER);
+        diasLeiaute.addComponent(sex,4,0);
+        diasLeiaute.setComponentAlignment(sex, Alignment.TOP_CENTER);
+        diasLeiaute.addComponent(sab,5,0);
+        diasLeiaute.setComponentAlignment(sab, Alignment.TOP_CENTER);
+        diasLeiaute.addComponent(dom,6,0);
+        diasLeiaute.setComponentAlignment(dom, Alignment.TOP_CENTER);
 
 
         //precisa de um case pra v q mes esta e qntos dias este mes tem
@@ -214,8 +242,10 @@ public class PainelCalendario extends Panel{
         //caixaMeses.setValue(tabelaMeses.get(cal.get(Calendar.MONTH) +1));//funciona
         for (int i = 0; i < diasMes; i++)
         {
-            PainelDia pd = new PainelDia(new ArrayList(),i+1);            
-            leiaute.addComponent(pd,colunaDestino,linhaDestino);
+            PainelDia pd = new PainelDia(new ArrayList(),i+1);
+            pd.listener = new EventoPassaReservas();
+            pd.addListener(pd.listener);
+            diasLeiaute.addComponent(pd,colunaDestino,linhaDestino);
             if (colunaDestino < 6) colunaDestino++;
             else
             {
@@ -224,16 +254,33 @@ public class PainelCalendario extends Panel{
             }
         }
 
-        //leiaute.removeComponent(3,2);  //para reconstruir o grid
-        HorizontalLayout seletorMes = new HorizontalLayout();
-        seletorMes.setSpacing(true);
-        //seletorMes.s
-        seletorMes.addComponent(caixaMeses);
-        seletorMes.addComponent(botao);
-        this.addComponent(seletorMes);
-
+        //diasLeiaute.removeComponent(3,2);  //para reconstruir o grid
         
-        this.addComponent(leiaute);
+        //seletorMes.s
+
+        listaLeiaute = new VerticalLayout();
+        listaLeiaute.setSpacing(true);
+        topoLeiaute.setSpacing(true);
+        mainLeiaute.setSpacing(true);
+
+        topoLeiaute.addComponent(caixaMeses);
+        topoLeiaute.addComponent(botaoMudarMes);
+
+        mainLeiaute.addComponent(topoLeiaute);
+
+        mainLeiaute.addComponent(diasLeiaute);
+
+        listaLeiaute.addComponent(listaReservas);
+        listaLeiaute.addComponent(botaoNovaReserva);
+        listaLeiaute.addComponent(botaoEditar);
+        listaLeiaute.addComponent(botaoExcluir);
+
+
+
+        mainLeiaute.addComponent(listaLeiaute);
+        
+        this.addComponent(mainLeiaute);
+        
         
 
 
@@ -272,6 +319,56 @@ public class PainelCalendario extends Panel{
     private void setNumMes(int numMes)
     {
         this.numMes = numMes;
+    }
+
+    /**
+     * Nota sobre os eventos EventoPassaReservas e EventoEditarReserva:
+     * O EventoPassaReservas pega as reservas que estao no arraylist do painel e passa 1 a 1
+     * (num for) e passará talvez dois campos de identificacao (nome do evento e sala e mais algum).
+     * -> O TIPO PASSADO PARA A LISTA DE EVENTOS (LISTSELECT) SERA O TIPO QUE DEVERA OBRIGATORIAMENTE
+     * SER RETIRADO DO LISTSELECT. Se passa uma reserva, o toString da reserva aparecera no listSelect.
+     * é necessario identificar qual a posicao selecionada e pegar da posicao correspondente. tb eh
+     * necessario filtrar selecao nula /:)
+     * lista de reservas
+     * | x0  | xx1  | xxx2  | ->
+     * se no listSelect for selecionado o indice 2, entao tem q pegar o indice 2 do arraylist de reservas
+     * do painel selecionado
+     * -> O listSelect ignora duplicatas, mesmo fazendo um for com addItem do objeto!
+     * 
+     */
+    private class EventoPassaReservas implements ClickListener
+    {
+
+        public void click(ClickEvent event)
+        {            
+            PainelDia pd = (PainelDia) event.getComponent();
+            System.out.println(""+pd.textoDia);
+            Reserva r = new Reserva();
+            listaReservas.addItem(r.getDadosReservaParaListSelect());
+        }
+
+    }
+
+    private class EventoNovaReserva implements Button.ClickListener
+    {
+    @Override
+        public void buttonClick(Button.ClickEvent event)
+        {
+            FormNovaReserva NR = new FormNovaReserva();
+            win.addWindow(NR);
+        }
+
+    }
+
+    private class EventoEditarReserva implements Button.ClickListener
+    {
+    @Override
+        public void buttonClick(Button.ClickEvent event)
+        {
+            Reserva valor = (Reserva) listaReservas.getValue();
+            System.out.println(valor.toString());
+        }
+
     }
 
     private class EventoTrocaMes implements Button.ClickListener
@@ -360,7 +457,7 @@ public class PainelCalendario extends Panel{
             for (int i = 0; i < diasMes; i++)
             {
                 PainelDia pd = new PainelDia(new ArrayList(),i+1);
-                leiaute.addComponent(pd,colunaDestino,linhaDestino);
+                diasLeiaute.addComponent(pd,colunaDestino,linhaDestino);
                 if (colunaDestino < 6) colunaDestino++;
             else
             {

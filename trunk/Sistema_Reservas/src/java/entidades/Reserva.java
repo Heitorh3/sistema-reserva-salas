@@ -1,8 +1,16 @@
-/*
+
+ /**
+ * @see A Classe Reserva contém os dados necessários para efetuar a reserva de uma sala
+ * em determinado dia. A reserva pode repetir-se periódicamente, pode ser alocada,
+ * editada e deletada pelo administrador. Somente o admin ou usuários autorizados
+ * podem criar reservas.
  * A classe Reserva sera a mais importante do programa. Atraves dela que teremos
  * acesso a todos os elementos do programa e todas as consultas serao feitas
  * lendo os eventos e fazendo referencias aos Recintos e Pessoas.
  *
+ *
+ * @autor autor Vinicius Valvassori
+ * @version
  */
 
 package entidades;
@@ -56,9 +64,44 @@ public class Reserva
     //q - quinzenalmente
     //m - mensalmente
 
+    /**
+     * Construtor vazio para a classe Reserva.
+     */
     public Reserva() {
     }
 
+    /** Construtor da classe Reserva com todos os campos requeridos.
+     *
+     * @param nomeEvento - String com o nome do Evento, que irá aparecer durante a consulta
+     *
+     * @param dataInicioEvento - String que contém o dia inicial da reserva. O usuário
+     * ficará preso à interface quando da entrada da data, portanto ele não conseguirá
+     * entrar com datas fora da realidade.
+     *
+     * @param dataFimEvento - String que contém o dia final do evento. Se alguma periodicidade for marcada,
+     * o programa "fará um while" para pegar todas as datas. O usuário
+     * ficará preso à interface quando da entrada da data, portanto ele não conseguirá
+     * entrar com datas fora da realidade.
+     *
+     * @param horarioInicioEvento - String que marca o horário inicial do evento naquele dia.
+     * O usuário ficará preso à interface quando da entrada do horário, portanto ele não conseguirá
+     * entrar com datas fora da realidade. (intervalos de 30 minutos).
+     *
+     * @param horarioFimEvento - String que marca o horário final do evento naquele dia.
+     * O usuário ficará preso à interface quando da entrada do horário, portanto ele não conseguirá
+     * entrar com datas fora da realidade. (intervalos de 30 minutos).
+     *
+     * @param finalidade - String que marca uma breve descrição sobre a reserva.
+     *
+     * @param responsavel - A pessoa responsável pela reserva.
+     *
+     * @param solicitante - A pessoa que solicitou o evento. Será retirado diretamente do login.
+     *
+     * @param Sala - A sala que está sendo reservada.
+     *
+     * @param repeticao - Caracte simples que maraca a periodicidade que a reserva terá. Quatro valores possíveis:
+     * d - somente no dia , s - semanalmente, q - quinzenalmente,  m- mensalmente
+     */
     public Reserva(String nomeEvento, String dataInicioEvento, String dataFimEvento, String horarioInicioEvento, String horarioFimEvento, String finalidade, Pessoa responsavel, Pessoa solicitante, Recinto Sala, char repeticao) {
         this.nomeEvento = nomeEvento;
         this.dataInicioEvento = dataInicioEvento;
@@ -72,105 +115,175 @@ public class Reserva
         this.repeticao = repeticao;
     }
 
+    /** Retorna o id da Reserva referente ao banco de dados.
+     * @return idReserva - o número da Id da reserva no banco de daddos.
+     */
     public int getIdReserva() {
         return IdReserva;
     }
 
+    /** Retorna o objeto sala associado a reserva
+     * @return Recinto - a classe Sala que está associada a Reserva
+     */
     public Recinto getSala() {
         return sala;
     }
 
+    /** Adiciona uma Sala a reserva.
+     *
+     * @param sala A sala para associar a reserva.
+     */
     public void setSala(Recinto sala) {
         this.sala = sala;
     }
 
+    /** Retorna o horario que o evento acaba no dia.
+     *
+     * @return O horário que o evento acaba no dia (hh:mm).
+     */
     public String getHorarioFimEvento() {
         return horarioFimEvento;
     }
 
+    /**Retorna o horário inicial do evento naquele dia
+     *
+     * @return string com o horario de inicio do evento no dia (hh:mm)
+     */
     public String getHorarioInicioEvento() {
         return horarioInicioEvento;
     }
 
+    /** Acerta o horario do fim da reserva no dia
+     *
+     * @param horarioFimEvento String com o horario completo de inicio da reserva (hh:mm)
+     */
     public void setHorarioFimEvento(String horarioFimEvento) {
         this.horarioFimEvento = horarioFimEvento;
     }
 
+    /**Acerta o horario de inicio da reserva.
+     *
+     * @param horarioInicioEvento O horario que a reserva começa (hh:mm).
+     */
     public void setHorarioInicioEvento(String horarioInicioEvento) {
         this.horarioInicioEvento = horarioInicioEvento;
     }
     
 
-    public Recinto getCodSala() {
-        return sala;
-    }
-
+    /** Pega a data que o evento terminará.
+     *
+     * @return String com a data que o evento irá terminar. (dd/mm/aaaa)
+     */
     public String getDataFimEvento() {
         return dataFimEvento;
     }
 
+    /** Pega a data do primeiro dia do evento.
+     *
+     * @return String com a data completa do inicio do evento.
+     */
     public String getDataInicioEvento() {
         return dataInicioEvento;
     }
 
+    /** A finalidade da reserva.
+     *
+     * @return String com a descriçao da finalidade do sistema.
+     */
     public String getFinalidade() {
         return finalidade;
     }
 
-    public String getHorarioUtilizacao() {
-        return horarioInicioEvento;
-    }
-
+    /** O nome do reserva.
+     *
+     * @return String com o nome da reserva.
+     */
     public String getNomeEvento() {
         return nomeEvento;
     }
 
+    /** A periodicidade da reserva.
+     *
+     * @return Char que indica qual a periodicidade do evento.
+     * d - somente no dia , s - semanalmente, q - quinzenalmente,  m- mensalmente
+     *
+     */
     public char getRepeticao() {
         return repeticao;
     }
 
+    /** A pessoa responsável pela reserva.
+     *
+     * @return Pessoa responsável
+     */
     public Pessoa getResponsavel() {
         return responsavel;
     }
 
+    /** A pessoa que solicitou a reserva
+     *
+     * @return Classe Pessoa com os dados do solicitante
+     */
     public Pessoa getSolicitante() {
         return solicitante;
     }
 
-    public void setCodSala(Recinto codSala) {
-        this.sala = codSala;
-    }
-
+    /**Acerta a data de final do evento
+     *
+     * @param dataFimEvento String com a data de fim do evento no formato dd/mm/aaaa.
+     */
     public void setDataFimEvento(String dataFimEvento) {
         this.dataFimEvento = dataFimEvento;
     }
 
+    /**Acerta a data de inicio do evento
+     *
+     * @param dataInicioEvento String com a data de inicio do evento no formato dd/mm/aaaa.
+     */
     public void setDataInicioEvento(String dataInicioEvento) {
         this.dataInicioEvento = dataInicioEvento;
     }
 
+    /**Acerta a finalidade da reserva.
+     *
+     * @param finalidade String com a descrição da reserva.
+     */
     public void setFinalidade(String finalidade) {
         this.finalidade = finalidade;
     }
 
-    public void setHorarioUtilizacao(String horarioUtilizacao) {
-        this.horarioInicioEvento = horarioUtilizacao;
-    }
-
+    /**Acerta um nome para o evento
+     *
+     * @param nomeEvento String com o nome do evento
+     */
     public void setNomeEvento(String nomeEvento) {
         this.nomeEvento = nomeEvento;
     }
 
+    /**Acerta a periodicidade do evento
+     *
+     * @param repeticao char com o codigo da repeticao
+     * d - somente no dia , s - semanalmente, q - quinzenalmente,  m- mensalmente
+     */
     public void setRepeticao(char repeticao) {
         this.repeticao = repeticao;
     }
 
+    /**Acerta o responsavel pela reserva
+     *
+     * @param responsavel Pessoa com os dados do responsavel
+     */
     public void setResponsavel(Pessoa responsavel) {
         this.responsavel = responsavel;
     }
 
+    /**Acerta um solicitante para a reserva.
+     *
+     * @param solicitante
+     */
     public void setSolicitante(Pessoa solicitante) {
         this.solicitante = solicitante;
+
     }
 
     @Override
@@ -237,5 +350,17 @@ public class Reserva
         return hash;
     }
 
+    /**
+     * Método que retorna uma String com um resumo da reserva para mostrar no ListSelect
+     * de reservas.
+     * @return String - Resumo dos Dados da Reserva
+     */
+    public String getDadosReservaParaListSelect()
+    {
+        String tudo = "";
+        tudo = this.getNomeEvento() + this.getFinalidade();
+        //tudo = this.nomeEvento + "  Sala: "+this.sala.getNumero()+"  Responsavel: " + this.getResponsavel().getNomePessoa() ;
+        return tudo;
+    }
 
 }

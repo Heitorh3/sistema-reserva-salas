@@ -19,14 +19,23 @@ public class PainelPesquisarResponsavel extends Panel{
 
     public PainelPesquisarResponsavel() {
         Table resultados = new Table("Resultados");
+        resultados.addContainerProperty("Nome", String.class, null);
+        resultados.addContainerProperty("E-mail", String.class, null);
+        resultados.addContainerProperty("Telefone", String.class, null);
+        resultados.addContainerProperty("Cargo", String.class, null);
+
+
+
+
+
         FormLayout leiaute = new FormLayout();
         Button pesquisar = new Button("Pesquisar");
 
         TextField sala = new TextField("Sala");
         leiaute.addComponent(sala);
-        leiaute.addComponent(pesquisar);
-        leiaute.addComponent(resultados);
+        leiaute.addComponent(pesquisar);        
         this.addComponent(leiaute);
+        this.addComponent(resultados);
     }
 
 

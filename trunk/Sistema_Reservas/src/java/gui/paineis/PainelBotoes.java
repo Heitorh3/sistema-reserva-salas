@@ -11,6 +11,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Window;
 import gui.formularios.FormGerenciaSalas;
+import gui.janelas.JanelaPesquisas;
 
 /**
  *
@@ -23,6 +24,7 @@ public class PainelBotoes extends Panel{
     Button botaoSair;
     Button botaoNovaReserva;
     Button botaoConsultaSala;
+    Button botaoPesquisar;
     HorizontalLayout leiaute;
     Window win;
 
@@ -34,8 +36,10 @@ public class PainelBotoes extends Panel{
         botaoLogin.setCaption("Entrar no sistema");
         botaoSair = new Button();
         botaoSair.setCaption("Encerrar");
+        
+        botaoPesquisar = new Button("Pesquisar...");
+        botaoPesquisar.addListener(new EventoPesquisar());
         /*
-        botaoNovaReserva = new Button();
         botaoNovaReserva.setCaption("Nova Reserva");
         botaoNovaReserva.addListener(new EventoNovaReserva());
         *
@@ -49,6 +53,7 @@ public class PainelBotoes extends Panel{
         leiaute.addComponent(botaoSair);        
         //leiaute.addComponent(botaoNovaReserva);
         leiaute.addComponent(botaoConsultaSala);
+        leiaute.addComponent(botaoPesquisar);
         this.addComponent(lInicio);
         this.addComponent(leiaute);
 
@@ -69,5 +74,17 @@ public class PainelBotoes extends Panel{
 
     }
 
-    
+    private class EventoPesquisar implements Button.ClickListener
+    {
+    @Override
+        public void buttonClick(Button.ClickEvent event)
+        {
+            JanelaPesquisas jp = new JanelaPesquisas();
+            win.addWindow(jp);
+
+        }
+
+    }
+
 }
+

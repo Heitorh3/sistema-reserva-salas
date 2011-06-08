@@ -52,17 +52,26 @@ public class JanelaPrincipal extends Application {
         VerticalLayout mainLayout1 = new VerticalLayout();
         HorizontalLayout mainLayout2 = new HorizontalLayout();
 
-        
-        mainLayout1.addComponent(new PainelBotoes(mainWindow));
-        mainLayout2.addComponent(new PainelCalendario(reservas,mainWindow));
+        PainelBotoes pb = new PainelBotoes(mainWindow);
+        PainelCalendario pc = new PainelCalendario(reservas,mainWindow);
+
+
+        mainLayout1.addComponent(pb);
+        mainLayout1.setComponentAlignment(pb, Alignment.TOP_CENTER);
+        mainLayout1.addComponent(pc);
+        mainLayout1.setComponentAlignment(pc, Alignment.TOP_CENTER);
+        mainLayout2.addComponent(mainLayout1);
+        //mainLayout2.
+        mainLayout2.setComponentAlignment(mainLayout1, Alignment.MIDDLE_CENTER);
         //mainLayout2.addComponent(new PainelDisplayReservas(mainWindow));
         //PainelCalendario pc = new PainelCalendario(reservas,mainWindow);
         //pc.
 
         setMainWindow(mainWindow);
 
-        mainWindow.addComponent(mainLayout1);
-        mainWindow.addComponent(mainLayout2);        
+        //mainWindow.addComponent(mainLayout1);
+        mainWindow.addComponent(mainLayout2);
+        
     }
 
     

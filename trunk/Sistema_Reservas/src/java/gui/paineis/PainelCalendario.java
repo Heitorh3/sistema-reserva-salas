@@ -56,6 +56,8 @@ public class PainelCalendario extends Panel{
     Button botaoEditar;
     Button botaoExcluir;
     Button botaoNovaReserva;
+    int diaS;
+    String mesS;
 
 
 
@@ -149,6 +151,7 @@ public class PainelCalendario extends Panel{
 
         caixaMeses.setNullSelectionAllowed(false);
         caixaMeses.setValue(tabelaMeses.get(cal.get(Calendar.MONTH) +1));//funciona
+        mesS = (String) tabelaMeses.get(cal.get(Calendar.MONTH) +1);
 
         switch (primeiroDiaSemana)
         {
@@ -283,40 +286,7 @@ public class PainelCalendario extends Panel{
         mainLeiaute.addComponent(listaLeiaute);
         
         this.addComponent(mainLeiaute);
-        
-        
 
-
-        for (int i = 0; i<reservas.size()-1;i++)
-        {
-            Reserva tempReserva = reservas.get(i);
-            //reservas.remove(0); 
-            String dataInicial = tempReserva.getDataInicioEvento();            
-            numMes = Integer.parseInt(dataInicial.subSequence(4,5).toString());            
-        }
-        
-        switch (numMes)
-            {
-                case 1:
-                {
-                    for (int i = 0;i<reservas.size();i++)
-                    {
-              
-                    }
-                }
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                case 11:
-                case 12:
-            }
-            
     }
 
     private void setNumMes(int numMes)
@@ -345,6 +315,10 @@ public class PainelCalendario extends Panel{
         public void click(ClickEvent event)
         {            
             PainelDia pd = (PainelDia) event.getComponent();
+
+            diaS = Integer.parseInt((String)pd.textoDia.getValue());           
+            mesS = (String) caixaMeses.getValue();
+
             System.out.println(""+pd.textoDia);
             Reserva r = new Reserva();
             listaReservas.addItem(r.getDadosReservaParaListSelect());
@@ -357,8 +331,11 @@ public class PainelCalendario extends Panel{
     @Override
         public void buttonClick(Button.ClickEvent event)
         {
-            FormNovaReserva NR = new FormNovaReserva();
-            win.addWindow(NR);
+            if (diaS != 0)
+            {
+                FormNovaReserva NR = new FormNovaReserva(diaS,mesS);
+                win.addWindow(NR);
+            }
         }
 
     }

@@ -7,7 +7,9 @@ package gui.paineis;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 
 /**
@@ -18,6 +20,10 @@ public class PainelPesquisaSalas extends Panel
 {
 
     public PainelPesquisaSalas() {
+        Table resultados = new Table("Resultados");
+        resultados.addContainerProperty("Número da Sala",String.class, null);
+        resultados.addContainerProperty("Estado",String.class, null);
+
         Button pesquisar = new Button("Pesquisar");
         TextField numero = new TextField("Número");
         TextField local  = new TextField("Localização");
@@ -29,7 +35,11 @@ public class PainelPesquisaSalas extends Panel
         leiaute.addComponent(cap);
         leiaute.addComponent(tipo);
         leiaute.addComponent(pesquisar);
-        this.addComponent(leiaute);
+        HorizontalLayout leiH = new HorizontalLayout();
+        leiH.setSpacing(true);
+        leiH.addComponent(leiaute);
+        leiH.addComponent(resultados);
+        this.addComponent(leiH);
 
     }
 

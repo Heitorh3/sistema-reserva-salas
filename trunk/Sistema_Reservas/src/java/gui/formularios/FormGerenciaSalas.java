@@ -71,20 +71,19 @@ public class FormGerenciaSalas extends Window{
         bNova         = new Button("Nova Sala");
         bEditar       = new Button("Editar Sala");
         listaSalas    = new ComboBox("Sala presentes no sistema");
-        listaSalas.addListener(new Listener() {
+        listaSalas.setImmediate(true);
+        listaSalas.setNullSelectionAllowed(false);
 
-            public void componentEvent(Event event) {
-                System.out.println("asdas");
-            }
-        });
-        numSala       = new TextField("Número da Sala");
-        numSala.setEnabled(false);
+        
+        
+        numSala       = new TextField("Número da Sala");        
+        numSala.setReadOnly(true);
         localSala     = new TextField("Local da Sala");
-        localSala.setEnabled(false);
+        localSala.setReadOnly(true);
         capSala       = new TextField("Capacidade");
-        capSala.setEnabled(false);
+        capSala.setReadOnly(true);
         tipoSala      = new TextField("Tipo de Sala");
-        tipoSala.setEnabled(false);
+        tipoSala.setReadOnly(true);
         listaRecursos = new ListSelect();
         addRec = new Button("Adicionar");
         addRec.addListener(new EventoAddRecurso());
@@ -96,6 +95,26 @@ public class FormGerenciaSalas extends Window{
 
         listaSalas.setWidth("300"); //??
         listaSalas.addItem(r);
+
+        listaSalas.addListener(new Listener() {
+
+            @Override
+            public void componentEvent(Event event) {
+                Recinto r = (Recinto) listaSalas.getValue();
+                numSala.setReadOnly(false);
+                numSala.setValue(r.getNumero());
+                numSala.setReadOnly(true);
+                localSala.setReadOnly(false);
+                localSala.setValue(r.getLocalizacao());
+                localSala.setReadOnly(true);
+                capSala.setReadOnly(false);
+                capSala.setValue(r.getCapacidade());
+                capSala.setReadOnly(true);
+                tipoSala.setReadOnly(false);
+                tipoSala.setValue(r.getTipo());
+                tipoSala.setReadOnly(true);
+            }
+        });
         
         leiauteBotoes.addComponent(bNova);
         leiauteBotoes.addComponent(bEditar);

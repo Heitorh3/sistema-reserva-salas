@@ -5,9 +5,12 @@
 
 package gui.paineis;
 
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 
 /**
@@ -17,6 +20,19 @@ import com.vaadin.ui.TextField;
 public class PainelPesquisaReservas extends Panel{
 
     public PainelPesquisaReservas() {
+        Table resultados = new Table("Resultados");
+        resultados.addContainerProperty("Nome da Reserva", String.class, null);
+        resultados.addContainerProperty("Nome do Responsável", String.class, null);
+        resultados.addContainerProperty("Nome do Solicitante", String.class, null);
+        resultados.addContainerProperty("Dia", String.class, null);
+        resultados.addContainerProperty("Início",String.class, null);
+        resultados.addContainerProperty("Fim",String.class, null);
+        resultados.addContainerProperty("Finalidade",String.class, null);
+        resultados.addContainerProperty("Tipo",String.class, null);
+
+
+
+
         Button pesquisar = new Button("Pesquisar");
         TextField nome = new TextField("Nome da Reserva");
         TextField responsavel = new TextField("Responsável");
@@ -36,7 +52,11 @@ public class PainelPesquisaReservas extends Panel{
         leiaute.addComponent(finalidade);
         leiaute.addComponent(tipo);
         leiaute.addComponent(pesquisar);
-        this.addComponent(leiaute);
+        HorizontalLayout leiH = new HorizontalLayout();
+        leiH.setSpacing(true);
+        leiH.addComponent(leiaute);
+        leiH.addComponent(resultados);
+        this.addComponent(leiH);
 
     }
 

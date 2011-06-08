@@ -7,6 +7,7 @@ package gui.paineis;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -28,14 +29,19 @@ public class PainelPesquisarResponsavel extends Panel{
 
 
 
+
         FormLayout leiaute = new FormLayout();
         Button pesquisar = new Button("Pesquisar");
 
         TextField sala = new TextField("Sala");
         leiaute.addComponent(sala);
-        leiaute.addComponent(pesquisar);        
-        this.addComponent(leiaute);
-        this.addComponent(resultados);
+        leiaute.addComponent(pesquisar);
+        HorizontalLayout leiH = new HorizontalLayout();
+        leiH.setSpacing(true);
+
+        leiH.addComponent(leiaute);
+        leiH.addComponent(resultados);
+        this.addComponent(leiH);
     }
 
 

@@ -10,7 +10,7 @@ import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import gui.formularios.FormNovaReserva;
+import gui.janelas.JanelaNovaReserva;
 import java.util.ArrayList;
 
 /**

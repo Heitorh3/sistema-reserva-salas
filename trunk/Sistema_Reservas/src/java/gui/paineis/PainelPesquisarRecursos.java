@@ -19,19 +19,13 @@ import com.vaadin.ui.TextField;
  *
  * @author 0213101
  */
-public class PainelPesquisarResponsavel extends Panel{
+public class PainelPesquisarRecursos extends Panel{
 
-    public PainelPesquisarResponsavel() {
+    public PainelPesquisarRecursos() {
         Table resultados = new Table("Resultados");
         resultados.addContainerProperty("Nome", String.class, null);
-        resultados.addContainerProperty("E-mail", String.class, null);
-        resultados.addContainerProperty("Telefone", String.class, null);
-        resultados.addContainerProperty("Cargo", String.class, null);
-
-
-
-
-
+        resultados.addContainerProperty("Qauntidade", Integer.class, null);
+        resultados.addContainerProperty("Descrição", String.class, null);
 
         FormLayout leiaute = new FormLayout();
         Button pesquisar = new Button("Pesquisar");

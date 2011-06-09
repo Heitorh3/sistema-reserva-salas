@@ -13,6 +13,7 @@ import com.vaadin.ui.Window;
 import gui.paineis.PainelPesquisaReservas;
 import gui.paineis.PainelPesquisaSalas;
 import gui.paineis.PainelPesquisaSalasDisponiveisPorHorario;
+import gui.paineis.PainelPesquisarRecursos;
 import gui.paineis.PainelPesquisarResponsavel;
 
 /**
@@ -27,10 +28,11 @@ public class JanelaPesquisas extends Window
     Panel pesquisaSalas;
     Panel pesquisaSalasDisponiveisEmHorario;
     Panel pesquisaResponsavelReserva;
+    Panel pesquisaRecursosSala;
 
     public JanelaPesquisas()
     {
-        this.setWidth("90%");
+        this.setWidth("95%");
         this.setHeight("90%");
         this.center();
         this.setModal(true);
@@ -38,20 +40,30 @@ public class JanelaPesquisas extends Window
         HorizontalLayout leiaute = new HorizontalLayout();
         leiaute.setSpacing(true);
         painelBotoes = new Panel();
+
         Button botaoReservas = new Button("Pesquisar Reservas");
         botaoReservas.addListener(new EventoPesquisaReservas());
         leiaute.addComponent(botaoReservas);
+
         Button botaoSalas = new Button("Pesquisar Estado das Salas");
         botaoSalas.addListener(new EventoPesquisaSalas());
         leiaute.addComponent(botaoSalas);
+
         Button botaoDispHorario = new Button("Pesquisar Salas Disponíveis em Determinado Horário");
         botaoDispHorario.addListener(new EventoPesqSalaPorHorario());
         leiaute.addComponent(botaoDispHorario);
+
         Button botaoResponsavelReserva = new Button("Pesquisar Responsável por Reserva");
         botaoResponsavelReserva.addListener(new EventoPesquisaResponsavel());
         leiaute.addComponent(botaoResponsavelReserva);
-        painelBotoes.addComponent(leiaute);        
+
+        Button botaoRecursosSala = new Button("Pesquisar Recursos de uma Sala");
+        botaoResponsavelReserva.addListener(new EventoPesquisaRecursos());
+        leiaute.addComponent(botaoRecursosSala);
+
+        painelBotoes.addComponent(leiaute);
         this.addComponent(painelBotoes);
+
 
         pesquisaReservas = new PainelPesquisaReservas();
         pesquisaReservas.setVisible(false);
@@ -69,7 +81,9 @@ public class JanelaPesquisas extends Window
         pesquisaResponsavelReserva.setVisible(false);
         this.addComponent(pesquisaResponsavelReserva);
 
-
+        pesquisaRecursosSala = new PainelPesquisarRecursos();
+        pesquisaRecursosSala.setVisible(false);
+        this.addComponent(pesquisaRecursosSala);
 
 
 
@@ -109,9 +123,20 @@ public class JanelaPesquisas extends Window
         public void buttonClick(ClickEvent event)
         {
             painelBotoes.setEnabled(false);
-            pesquisaResponsavelReserva .setVisible(true);
+            pesquisaResponsavelReserva.setVisible(true);
 
         }
+    }
+
+    private class EventoPesquisaRecursos implements Button.ClickListener
+    {
+
+        @Override
+        public void buttonClick(ClickEvent event) {
+            painelBotoes.setEnabled(false);
+            pesquisaRecursosSala.setVisible(true);
+        }
+
     }
 
 }

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package gui.formularios;
+package gui.janelas;
 
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
@@ -17,7 +17,7 @@ import com.vaadin.ui.Window;
  *
  * @author 0213101
  */
-public class FormNovaReserva extends Window{
+public class JanelaNovaReserva extends Window{
     Panel principal;
     Panel sala;
     Panel labelResponsavel;
@@ -38,7 +38,7 @@ public class FormNovaReserva extends Window{
      * megafoda pra valorizar.
      * - Cabeceia
      */
-    public FormNovaReserva(int dia, String mes)
+    public JanelaNovaReserva(int dia, String mes)
     {
         
             this.setModal(true);
@@ -56,9 +56,11 @@ public class FormNovaReserva extends Window{
             NSresponsavel = new NativeSelect("Responsável");
             tfDia = new TextField("Dia");
             tfDia.setValue(Integer.toString(dia));
+            tfDia.setReadOnly(true);
 
             tfMes = new TextField("Mes");
             tfMes.setValue(mes);
+            tfMes.setReadOnly(true);
 
             this.addComponent(nomeReserva);
             this.addComponent(solicitante);

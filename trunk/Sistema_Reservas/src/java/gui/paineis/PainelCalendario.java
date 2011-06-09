@@ -18,7 +18,7 @@ import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import gui.formularios.FormNovaReserva;
+import gui.janelas.JanelaNovaReserva;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -333,7 +333,7 @@ public class PainelCalendario extends Panel{
         {
             if (diaS != 0)
             {
-                FormNovaReserva NR = new FormNovaReserva(diaS,mesS);
+                JanelaNovaReserva NR = new JanelaNovaReserva(diaS,mesS);
                 win.addWindow(NR);
             }
         }

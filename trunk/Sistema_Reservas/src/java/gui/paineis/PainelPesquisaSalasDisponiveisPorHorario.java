@@ -86,6 +86,5 @@ public class PainelPesquisaSalasDisponiveisPorHorario extends Panel{
         this.addComponent(mainLayout);
     }
 
-
 }
 

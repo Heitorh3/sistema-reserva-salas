@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package gui.formularios;
+package gui.janelas;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
  *
  * @author 0213101
  */
-public class FormGerenciaSalas extends Window{
+public class JanelaGerenciarSalas extends Window{
     TextField numSala;
     TextField localSala;
     TextField capSala;
@@ -41,7 +41,7 @@ public class FormGerenciaSalas extends Window{
     TextField quantRec;
     TextField descrRec;
 
-    public FormGerenciaSalas()
+    public JanelaGerenciarSalas()
     {
         Recinto r = new Recinto();
         r.setNumero(200);
@@ -70,9 +70,11 @@ public class FormGerenciaSalas extends Window{
         bDeletar      = new Button("Excluir Sala");
         bNova         = new Button("Nova Sala");
         bEditar       = new Button("Editar Sala");
+        bEditar.addListener(new EventoEditarRecurso());
         listaSalas    = new ComboBox("Sala presentes no sistema");
         listaSalas.setImmediate(true);
         listaSalas.setNullSelectionAllowed(false);
+        listaSalas.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_INDEX);
 
         
         
@@ -159,4 +161,25 @@ public class FormGerenciaSalas extends Window{
         }
     }
 
+    private class EventoSalvaSalaAlterada implements Button.ClickListener {
+
+        public void buttonClick(ClickEvent event) {
+
+            bEditar.setCaption("Editar");
+            bEditar.addListener(new EventoEditarRecurso());
+            System.out.println(listaSalas.getValue());
+        }
+    }
+
+    private class EventoEditarRecurso implements Button.ClickListener {
+
+        public void buttonClick(ClickEvent event) {
+            if (listaSalas.getValue() != null) {
+                bEditar.setCaption("Salvar");
+                bEditar.addListener(new EventoSalvaSalaAlterada());
+                System.out.println(listaSalas.getValue());
+            }
+
+        }
+    }
 }

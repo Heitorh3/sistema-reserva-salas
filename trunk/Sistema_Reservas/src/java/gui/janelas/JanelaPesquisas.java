@@ -11,7 +11,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Window;
 import gui.paineis.PainelPesquisaReservas;
-import gui.paineis.PainelPesquisaSalas;
 import gui.paineis.PainelPesquisaSalasDisponiveisPorHorario;
 import gui.paineis.PainelPesquisarRecursos;
 import gui.paineis.PainelPesquisarResponsavel;
@@ -45,9 +44,12 @@ public class JanelaPesquisas extends Window
         botaoReservas.addListener(new EventoPesquisaReservas());
         leiaute.addComponent(botaoReservas);
 
-        Button botaoSalas = new Button("Pesquisar Estado das Salas");
+        /*
+         Button botaoSalas = new Button("Pesquisar Estado das Salas");
         botaoSalas.addListener(new EventoPesquisaSalas());
         leiaute.addComponent(botaoSalas);
+         * 
+         */
 
         Button botaoDispHorario = new Button("Pesquisar Salas Disponíveis em Determinado Horário");
         botaoDispHorario.addListener(new EventoPesqSalaPorHorario());
@@ -58,7 +60,7 @@ public class JanelaPesquisas extends Window
         leiaute.addComponent(botaoResponsavelReserva);
 
         Button botaoRecursosSala = new Button("Pesquisar Recursos de uma Sala");
-        botaoResponsavelReserva.addListener(new EventoPesquisaRecursos());
+        botaoRecursosSala.addListener(new EventoPesquisaRecursos());
         leiaute.addComponent(botaoRecursosSala);
 
         painelBotoes.addComponent(leiaute);
@@ -69,9 +71,12 @@ public class JanelaPesquisas extends Window
         pesquisaReservas.setVisible(false);
         this.addComponent(pesquisaReservas);
 
-        pesquisaSalas = new PainelPesquisaSalas();
+        /*
+         pesquisaSalas = new PainelPesquisaSalas();
         pesquisaSalas.setVisible(false);
         this.addComponent(pesquisaSalas);
+         *
+         */
 
         pesquisaSalasDisponiveisEmHorario = new PainelPesquisaSalasDisponiveisPorHorario();
         pesquisaSalasDisponiveisEmHorario.setVisible(false);
@@ -89,8 +94,14 @@ public class JanelaPesquisas extends Window
 
     }
 
+    public Panel getPainelBotoes()
+    {
+        return this.painelBotoes;
+    }
+
     private class EventoPesquisaReservas implements Button.ClickListener
     {
+        @Override
         public void buttonClick(ClickEvent event)
         {
             painelBotoes.setEnabled(false);
@@ -100,6 +111,7 @@ public class JanelaPesquisas extends Window
     }
     private class EventoPesquisaSalas implements Button.ClickListener
     {
+        @Override
         public void buttonClick(ClickEvent event)
         {
             painelBotoes.setEnabled(false);
@@ -110,6 +122,7 @@ public class JanelaPesquisas extends Window
 
     private class EventoPesqSalaPorHorario implements Button.ClickListener
     {
+        @Override
         public void buttonClick(ClickEvent event)
         {
             painelBotoes.setEnabled(false);
@@ -120,6 +133,7 @@ public class JanelaPesquisas extends Window
 
     private class EventoPesquisaResponsavel implements Button.ClickListener
     {
+        @Override
         public void buttonClick(ClickEvent event)
         {
             painelBotoes.setEnabled(false);
@@ -130,7 +144,6 @@ public class JanelaPesquisas extends Window
 
     private class EventoPesquisaRecursos implements Button.ClickListener
     {
-
         @Override
         public void buttonClick(ClickEvent event) {
             painelBotoes.setEnabled(false);
@@ -138,5 +151,7 @@ public class JanelaPesquisas extends Window
         }
 
     }
+
+
 
 }

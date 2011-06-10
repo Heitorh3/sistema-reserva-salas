@@ -7,18 +7,19 @@ package gui.paineis;
 
 
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
+import gui.janelas.JanelaPesquisas;
 
 /**
  *
  * @author 0213101
  */
 public class PainelPesquisaSalasDisponiveisPorHorario extends Panel{
+    Button voltar;
 
     public PainelPesquisaSalasDisponiveisPorHorario() {
         
@@ -32,11 +33,16 @@ public class PainelPesquisaSalasDisponiveisPorHorario extends Panel{
         resultados.addContainerProperty("Recursos",NativeSelect.class, null);
         resultados.addContainerProperty("Disponível?",String.class, null);
 
-        /*
-        resultados.addItem(new Object[] {
-        new Integer(303), "Centro", new Integer(43), "banheiro",new NativeSelect(),"Sim"},new Integer(6));
-        *
-        */
+        voltar = new Button("Voltar");
+        voltar.addListener(new Button.ClickListener() {
+            public void buttonClick(Button.ClickEvent event) {
+                setVisible(false);
+                VerticalLayout o = (VerticalLayout) getParent();
+                JanelaPesquisas o2 = (JanelaPesquisas) o.getParent();
+                Panel p = o2.getPainelBotoes();
+                p.setEnabled(true);
+            }
+        });
 
         Button pesquisar = new Button("Pesquisar");
         NativeSelect dia = new NativeSelect("Dia");
@@ -81,6 +87,7 @@ public class PainelPesquisaSalasDisponiveisPorHorario extends Panel{
         leiauteHora.addComponent(min);
         leiV.addComponent(leiauteHora);
         leiV.addComponent(pesquisar);
+        leiV.addComponent(voltar);
         mainLayout.addComponent(leiV);
         mainLayout.addComponent(resultados);
         this.addComponent(mainLayout);

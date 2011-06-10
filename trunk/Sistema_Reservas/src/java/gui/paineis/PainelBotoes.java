@@ -10,7 +10,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Window;
-import gui.formularios.FormGerenciaSalas;
+import gui.janelas.JanelaGerenciarSalas;
 import gui.janelas.JanelaPesquisas;
 
 /**
@@ -27,13 +27,16 @@ public class PainelBotoes extends Panel{
     Button botaoPesquisar;
     HorizontalLayout leiaute;
     Window win;
+    FormLogin pl;
 
     public PainelBotoes(Window win)
     {
+        pl = new FormLogin();
         this.win = win;
         lInicio = new Label("<b>Sistema de Reserva de Salas 2011</b>",Label.CONTENT_XHTML);
         botaoLogin = new Button();
         botaoLogin.setCaption("Entrar no sistema");
+        botaoLogin.addListener(new EventoLogin());
         botaoSair = new Button();
         botaoSair.setCaption("Encerrar");
         
@@ -49,9 +52,10 @@ public class PainelBotoes extends Panel{
         botaoConsultaSala.addListener(new EventoNovaSala());
         
         leiaute = new HorizontalLayout();
+        leiaute.addComponent(pl);
+        pl.setVisible(false);
         leiaute.addComponent(botaoLogin);
-        leiaute.addComponent(botaoSair);        
-        //leiaute.addComponent(botaoNovaReserva);
+        leiaute.addComponent(botaoSair);
         leiaute.addComponent(botaoConsultaSala);
         leiaute.addComponent(botaoPesquisar);
         this.addComponent(lInicio);
@@ -67,7 +71,7 @@ public class PainelBotoes extends Panel{
     @Override
         public void buttonClick(Button.ClickEvent event)
         {
-            FormGerenciaSalas FNS = new FormGerenciaSalas();
+            JanelaGerenciarSalas FNS = new JanelaGerenciarSalas();
             win.addWindow(FNS);
 
         }
@@ -84,6 +88,18 @@ public class PainelBotoes extends Panel{
 
         }
 
+    }
+    
+    private class EventoLogin implements Button.ClickListener
+    {
+    @Override
+        public void buttonClick(Button.ClickEvent event)
+        {
+            if (pl.isVisible())
+                pl.setVisible(false);
+            else
+                pl.setVisible(true);
+        }
     }
 
 }

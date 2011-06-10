@@ -74,8 +74,6 @@ public class JanelaGerenciarSalas extends Window{
         listaSalas    = new ComboBox("Sala presentes no sistema");
         listaSalas.setImmediate(true);
         listaSalas.setNullSelectionAllowed(false);
-        listaSalas.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_INDEX);
-
         
         
         numSala       = new TextField("Número da Sala");        

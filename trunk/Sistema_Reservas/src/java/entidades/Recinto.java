@@ -6,7 +6,9 @@
 
 package entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table
-public class Recinto
+public class Recinto implements Serializable
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -34,10 +36,9 @@ public class Recinto
     @Column
     private int capacidade;                 //qntas pessoas a sala comporta
     @Column
-    private String tipo;                    //define o tipo da sala, lab, aula, auditorio,etc
-    @Column
+    private String tipo;                    //define o tipo da sala, lab, aula, auditorio,etc    
     @OneToMany(mappedBy = "recinto")
-    private ArrayList<Recurso> recursos;    //lista de recursos da sala
+    private List<Recurso> recursos;    //lista de recursos da sala
 
     public Recinto() {
     }
@@ -68,7 +69,7 @@ public class Recinto
         return numero;
     }
 
-    public ArrayList<Recurso> getRecursos() {
+    public List<Recurso> getRecursos() {
         return recursos;
     }
 

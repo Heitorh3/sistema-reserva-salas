@@ -4,11 +4,13 @@
  */
 package entidades;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -18,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table
-public class Recurso
+public class Recurso implements Serializable
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -30,8 +32,10 @@ public class Recurso
     private int quantidade;         //quantidade deste recurso
     @Column
     private String comentarios;
-    @ManyToOne
+    @ManyToOne(targetEntity=Recinto.class)
+    @JoinColumn(name="idRecinto")
     private Recinto recinto;
+
     /* em 'comentarios' fica qquer informacao extra sobre o recurso da sala em particular
     ex:
     nomeRecurso: computador
@@ -83,6 +87,15 @@ public class Recurso
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
+    public Recinto getRecinto() {
+        return recinto;
+    }
+
+    public void setRecinto(Recinto recinto) {
+        this.recinto = recinto;
+    }
+
 
     @Override
     public boolean equals(Object obj) {

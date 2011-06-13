@@ -5,9 +5,7 @@
 
 package entidades;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import java.util.List;
 
 /**
  *
@@ -20,6 +18,45 @@ public class Main {
      */
     public static void main(String[] args)
     {
+        Hibernate h = new Hibernate();
+
+        
+        Pessoa p;
+
+        h.beginTransaction();
+            List<Pessoa> l = h.list(Pessoa.class);
+            System.out.println(l.toString());
+        h.endTransaction();
+
+
+        /*
+        //Adiciona tupla no banco.
+        h.beginTransaction();
+            p = new Pessoa("Vinicius","sarado_da_praia_2008@zipmail.com","5197287877","mestre","master","chief",true,false);
+            h.saveOnly(p);
+        h.endTransaction();
+         *
+         */
+
+        /*
+        //Modifica tupla.
+        h.beginTransaction();
+            p = (Pessoa) h.getObject(Pessoa.class, 13);
+            p.setEmail("email_serio@gmail.com");
+            h.updateOnly(p);
+        h.endTransaction();
+         *
+         */
+        
+
+        /*
+        //Deleta entrada do banco
+        h.beginTransaction();
+            p = (Pessoa) h.getObject(Pessoa.class, 13);
+            h.delete(p);
+        h.endTransaction();
+         *
+         */
 
     }
         

@@ -31,11 +31,7 @@ public class JanelaNovaReserva extends Window{
     TextField tfMes;
     TextField aAno;
     NativeSelect NSsala;
-    Label dataInicial;
-    Label dataFinal;
-    Label tipoSala;
     ComboBox recsSala;
-    Label diaInicial;
     OptionGroup repeticao;
     Button salvar;
     Button cancelar;
@@ -49,8 +45,8 @@ public class JanelaNovaReserva extends Window{
     {
         
             this.setModal(true);
-            this.setWidth("50%");
-            this.setHeight("50%");
+            this.setWidth("70%");
+            this.setHeight("70%");
             this.center();
 
             VerticalLayout mainLayout = new VerticalLayout();
@@ -60,8 +56,10 @@ public class JanelaNovaReserva extends Window{
             HorizontalLayout leiauteFim = new HorizontalLayout();
             leiauteFim.setSpacing(true);            
             
-            dataInicial = new Label("Data Inicial:");
-            dataFinal = new Label  ("Data Final:");
+            Label as = new Label("  às  ");
+            Label di = new Label("Data Inicial: ");
+            Label df = new Label("  às  ");
+
             nomeReserva = new TextField("Nome do Evento");
             solicitante = new TextField("Solicitante");
             //neste setValue vai o nome do solicitante logado no sistema
@@ -74,6 +72,8 @@ public class JanelaNovaReserva extends Window{
             repeticao.addItem("Semanalmente");
             repeticao.addItem("Quinzenalmente");
             repeticao.addItem("Mensalmente");
+            //repeticao.setNullSelectionAllowed(false);
+            repeticao.setValue("Diariamente");
             
             NativeSelect horaInicio = new NativeSelect();
             NativeSelect minInicio = new NativeSelect();
@@ -131,12 +131,12 @@ public class JanelaNovaReserva extends Window{
             mainLayout.addComponent(NSresponsavel);
             leiauteDia.addComponent(diaIni);
             leiauteDia.addComponent(mesIni);
-            //leiauteIni.addComponent(dataInicial);
+            leiauteDia.addComponent(as);
             leiauteDia.addComponent(horaInicio);
-            leiauteDia.addComponent(minInicio);
-            //leiauteFim.addComponent(dataFinal);            
+            leiauteDia.addComponent(minInicio);           
             leiauteFim.addComponent(diaFim);
             leiauteFim.addComponent(mesFim);
+            leiauteFim.addComponent(as);
             leiauteFim.addComponent(horaFim);
             leiauteFim.addComponent(minFim);
             mainLayout.addComponent(leiauteDia);

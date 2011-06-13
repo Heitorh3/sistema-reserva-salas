@@ -314,10 +314,12 @@ public class PainelCalendario extends Panel{
 
         public void click(ClickEvent event)
         {            
-            PainelDia pd = (PainelDia) event.getComponent();
+            PainelDia pd = (PainelDia) event.getComponent();            
 
             diaS = Integer.parseInt((String)pd.textoDia.getValue());           
             mesS = (String) caixaMeses.getValue();
+
+            listaReservas.setCaption("Reservas para o dia " + diaS + " de " + mesS );
 
             System.out.println(""+pd.textoDia);
             Reserva r = new Reserva();
@@ -359,6 +361,7 @@ public class PainelCalendario extends Panel{
         public void buttonClick(Button.ClickEvent event)
         {
             listaReservas.removeAllItems();
+            listaReservas.setCaption("Lista de Reservas");
             int colunaDestino = 0;
             int linhaDestino = 1;
             System.out.println("Mes na caixa de meses: " + caixaMeses.getValue());

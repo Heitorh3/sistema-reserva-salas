@@ -3,6 +3,7 @@
 
 package entidades;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,14 +26,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table
-public class Reserva
+public class Reserva implements Serializable
 {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column
     private int IdReserva;                  //chave primaria no Hibernate
     @Column
-    private String nomeEvento;              //nome que identificara o evento
+    private String nomeReserva;              //nome que identificara o evento
     @Column
     private String dataInicioEvento;        //data inicial do evento
     @Column
@@ -42,14 +43,11 @@ public class Reserva
     @Column
     private String horarioFimEvento;        //horario qndo o evento acaba no dia
     @Column
-    private String finalidade;              //descricao da finalidade
-    @Column
+    private String finalidade;              //descricao da finalidade    
     @ManyToOne
-    private Pessoa responsavel;             //o nome da pessoa responsavel pelo evento
-    @Column
+    private Pessoa responsavel;             //o nome da pessoa responsavel pelo evento    
     @ManyToOne
-    private Pessoa solicitante;             //nome do solicitante, deve referenciar o usuario cadastrado na lista de usuarios
-    @Column
+    private Pessoa solicitante;             //nome do solicitante, deve referenciar o usuario cadastrado na lista de usuarios    
     @ManyToOne
     private Recinto sala;                //--referencia externa--
     @Column
@@ -68,7 +66,7 @@ public class Reserva
 
     /** Construtor da classe Reserva com todos os campos requeridos.
      *
-     * @param nomeEvento - String com o nome do Evento, que irá aparecer durante a consulta
+     * @param nomeReserva - String com o nome do Evento, que irá aparecer durante a consulta
      *
      * @param dataInicioEvento - String que contém o dia inicial da reserva. O usuário
      * ficará preso à interface quando da entrada da data, portanto ele não conseguirá
@@ -99,7 +97,7 @@ public class Reserva
      * d - somente no dia , s - semanalmente, q - quinzenalmente,  m- mensalmente
      */
     public Reserva(String nomeEvento, String dataInicioEvento, String dataFimEvento, String horarioInicioEvento, String horarioFimEvento, String finalidade, Pessoa responsavel, Pessoa solicitante, Recinto Sala, char repeticao) {
-        this.nomeEvento = nomeEvento;
+        this.nomeReserva = nomeEvento;
         this.dataInicioEvento = dataInicioEvento;
         this.dataFimEvento = dataFimEvento;
         this.horarioInicioEvento = horarioInicioEvento;
@@ -195,7 +193,7 @@ public class Reserva
      * @return String com o nome da reserva.
      */
     public String getNomeEvento() {
-        return nomeEvento;
+        return nomeReserva;
     }
 
     /** A periodicidade da reserva.
@@ -250,10 +248,10 @@ public class Reserva
 
     /**Acerta um nome para o evento
      *
-     * @param nomeEvento String com o nome do evento
+     * @param nomeReserva String com o nome do evento
      */
     public void setNomeEvento(String nomeEvento) {
-        this.nomeEvento = nomeEvento;
+        this.nomeReserva = nomeEvento;
     }
 
     /**Acerta a periodicidade do evento
@@ -284,7 +282,7 @@ public class Reserva
 
     @Override
     public String toString() {
-        return "EventoReserva{" + "nomeEvento=" + nomeEvento + "dataInicioEvento=" + dataInicioEvento + "dataFimEvento=" + dataFimEvento + "horarioInicioEvento=" + horarioInicioEvento + "horarioFimEvento=" + horarioFimEvento + "finalidade=" + finalidade + "responsavel=" + responsavel + "solicitante=" + solicitante + "sala=" + sala + "repeticao=" + repeticao + '}';
+        return "EventoReserva{" + "nomeEvento=" + nomeReserva + "dataInicioEvento=" + dataInicioEvento + "dataFimEvento=" + dataFimEvento + "horarioInicioEvento=" + horarioInicioEvento + "horarioFimEvento=" + horarioFimEvento + "finalidade=" + finalidade + "responsavel=" + responsavel + "solicitante=" + solicitante + "sala=" + sala + "repeticao=" + repeticao + '}';
     }
 
     @Override
@@ -296,7 +294,7 @@ public class Reserva
             return false;
         }
         final Reserva other = (Reserva) obj;
-        if ((this.nomeEvento == null) ? (other.nomeEvento != null) : !this.nomeEvento.equals(other.nomeEvento)) {
+        if ((this.nomeReserva == null) ? (other.nomeReserva != null) : !this.nomeReserva.equals(other.nomeReserva)) {
             return false;
         }
         if ((this.dataInicioEvento == null) ? (other.dataInicioEvento != null) : !this.dataInicioEvento.equals(other.dataInicioEvento)) {
@@ -333,7 +331,7 @@ public class Reserva
     public int hashCode() {
         int hash = 3;
         hash = 79 * hash + this.IdReserva;
-        hash = 79 * hash + (this.nomeEvento != null ? this.nomeEvento.hashCode() : 0);
+        hash = 79 * hash + (this.nomeReserva != null ? this.nomeReserva.hashCode() : 0);
         hash = 79 * hash + (this.dataInicioEvento != null ? this.dataInicioEvento.hashCode() : 0);
         hash = 79 * hash + (this.dataFimEvento != null ? this.dataFimEvento.hashCode() : 0);
         hash = 79 * hash + (this.horarioInicioEvento != null ? this.horarioInicioEvento.hashCode() : 0);
@@ -355,7 +353,7 @@ public class Reserva
     {
         String tudo = "";
         tudo = this.getNomeEvento() + this.getFinalidade();
-        //tudo = this.nomeEvento + "  Sala: "+this.sala.getNumero()+"  Responsavel: " + this.getResponsavel().getNomePessoa() ;
+        //tudo = this.nomeReserva + "  Sala: "+this.sala.getNumero()+"  Responsavel: " + this.getResponsavel().getNomePessoa() ;
         return tudo;
     }
 

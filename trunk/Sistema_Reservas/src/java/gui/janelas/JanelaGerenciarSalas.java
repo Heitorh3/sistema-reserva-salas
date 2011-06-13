@@ -212,12 +212,12 @@ public class JanelaGerenciarSalas extends Window{
         {
             Hibernate h = new Hibernate();
             h.beginTransaction();
-            {
+            {                
                 for (Iterator i = listaRecursos.getItemIds().iterator(); i.hasNext();)
                 {
                     int iid = (Integer) i.next();
                     Item item = listaRecursos.getItem(iid);
-                    System.out.println(item.toString());
+                    System.out.println("oi");
 
 
 
@@ -235,6 +235,10 @@ public class JanelaGerenciarSalas extends Window{
                  */
             }
             h.endTransaction();
+            bNova.setCaption("Nova Sala");
+            bNova.removeListener(this);
+            bNova.addListener(new EventoNovaSala());
+            //desligaCampos();
         }
     }
 
@@ -245,9 +249,10 @@ public class JanelaGerenciarSalas extends Window{
     {
         public void buttonClick(ClickEvent event)
         {
+            listaSalas.setEnabled(false);
             bNova.setCaption("Salvar");
             bNova.removeListener(this);
-            bNova.addListener(this);
+            bNova.addListener(new EventoAddSala());            
             bEditar.setEnabled(false);
             bDeletar.setEnabled(false);
             numSala.setReadOnly(false);

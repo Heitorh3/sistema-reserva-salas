@@ -23,20 +23,20 @@ public class Main {
         
         Pessoa p;
 
+        /*
         h.beginTransaction();
             List<Pessoa> l = h.list(Pessoa.class);
             System.out.println(l.toString());
         h.endTransaction();
+         */
 
 
-        /*
+        
         //Adiciona tupla no banco.
         h.beginTransaction();
             p = new Pessoa("Vinicius","sarado_da_praia_2008@zipmail.com","5197287877","mestre","master","chief",true,false);
             h.saveOnly(p);
         h.endTransaction();
-         *
-         */
 
         /*
         //Modifica tupla.

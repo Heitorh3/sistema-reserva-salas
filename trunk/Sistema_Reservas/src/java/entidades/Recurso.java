@@ -131,6 +131,6 @@ public class Recurso implements Serializable
     
     @Override
     public String toString() {
-        return "Recurso{" + "nome=" + nomeRecurso + "quantidade=" + quantidade + "comentarios=" + comentarios + '}';
+        return nomeRecurso + "  " +quantidade + "  " +  comentarios;
     }
 }

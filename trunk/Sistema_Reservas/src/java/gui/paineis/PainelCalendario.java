@@ -245,6 +245,7 @@ public class PainelCalendario extends Panel{
         //int diasMes = tabelaDiasMes.get(1);
         int diasMes = Integer.parseInt((String)(tabelaDiasMes.get(cal.get(Calendar.MONTH)+1)));
         //caixaMeses.setValue(tabelaMeses.get(cal.get(Calendar.MONTH) +1));//funciona
+
         for (int i = 0; i < diasMes; i++)
         {
             PainelDia pd = new PainelDia(new ArrayList(),i+1);
@@ -289,11 +290,6 @@ public class PainelCalendario extends Panel{
 
     }
 
-    private void setNumMes(int numMes)
-    {
-        this.numMes = numMes;
-    }
-
     /**
      * Nota sobre os eventos EventoPassaReservas e EventoEditarReserva:
      * O EventoPassaReservas pega as reservas que estao no arraylist do painel e passa 1 a 1
@@ -309,6 +305,7 @@ public class PainelCalendario extends Panel{
      * -> O listSelect ignora duplicatas, mesmo fazendo um for com addItem do objeto!
      * 
      */
+
     private class EventoPassaReservas implements ClickListener
     {
 

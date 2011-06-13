@@ -5,18 +5,21 @@
 
 package gui.janelas;
 
+import com.vaadin.data.Item;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import entidades.Hibernate;
 import entidades.Recinto;
+import entidades.Recurso;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -27,34 +30,25 @@ public class JanelaGerenciarSalas extends Window{
     TextField localSala;
     TextField capSala;
     TextField tipoSala;
-    ListSelect listaRecursos;
+    Table listaRecursos;
     ComboBox listaSalas;
     Button bDeletar;
     Button bNova;
     Button bEditar;
     Button addRec;
-    Button ediRec;
+    //Button ediRec;
     Button delRec;
     Panel pRecs;
     Panel dadosSala;
     TextField nomeRec;
     TextField quantRec;
     TextField descrRec;
+    static int indexTabela;
 
     public JanelaGerenciarSalas()
     {
-        Recinto r = new Recinto();
-        r.setNumero(200);
-        r.setLocalizacao("Térreo");
-        r.setCapacidade(30);
-        r.setTipo("laboratório");
-        r.setRecursos(new ArrayList());
-
-
-
-
-        this.setHeight("70%");
-        this.setWidth("70%");
+        this.setHeight("90%");
+        this.setWidth("90%");
         this.center();
         this.setModal(true);
 
@@ -69,6 +63,7 @@ public class JanelaGerenciarSalas extends Window{
 
         bDeletar      = new Button("Excluir Sala");
         bNova         = new Button("Nova Sala");
+        bNova.addListener(new EventoNovaSala());
         bEditar       = new Button("Editar Sala");
         bEditar.addListener(new EventoEditarRecurso());
         listaSalas    = new ComboBox("Sala presentes no sistema");
@@ -84,17 +79,35 @@ public class JanelaGerenciarSalas extends Window{
         capSala.setReadOnly(true);
         tipoSala      = new TextField("Tipo de Sala");
         tipoSala.setReadOnly(true);
-        listaRecursos = new ListSelect();
+        
+        listaRecursos = new Table();
+        listaRecursos.setEditable(true);
+        listaRecursos.setSelectable(true);
+        listaRecursos.setNullSelectionAllowed(false);
+        listaRecursos.addContainerProperty("Nome", String.class, null);
+        listaRecursos.addContainerProperty("Quantidade", Integer.class, null);
+        listaRecursos.addContainerProperty("Descrição", String.class, null);
+        //indexTabela = 1;
+
+
         addRec = new Button("Adicionar");
         addRec.addListener(new EventoAddRecurso());
-        ediRec = new Button("Editar");
+        addRec.setEnabled(false);
+        //ediRec = new Button("Editar");
+        //ediRec.setEnabled(false);
         delRec = new Button("Remover");
+        delRec.setEnabled(false);
+        delRec.addListener(new EventoRemRecurso());
         nomeRec = new TextField("Nome:");
         quantRec = new TextField("Quantidade:");
         descrRec = new TextField("Descrição:");
+        nomeRec.setReadOnly(true);
+        quantRec.setReadOnly(true);
+        descrRec.setReadOnly(true);
+        listaRecursos.setReadOnly(true);
 
         listaSalas.setWidth("300"); //??
-        listaSalas.addItem(r);
+
 
         listaSalas.addListener(new Listener() {
 
@@ -132,7 +145,7 @@ public class JanelaGerenciarSalas extends Window{
         leiauteH.addComponent(leiauteForm);
         leiauteRecs.addComponent(listaRecursos);
         leiauteRecs.addComponent(addRec);
-        leiauteRecs.addComponent(ediRec);
+        //leiauteRecs.addComponent(ediRec);
         leiauteRecs.addComponent(delRec);
         pRecs.addComponent(leiauteRecs);
         pRecs.addComponent(nomeRec);
@@ -144,18 +157,30 @@ public class JanelaGerenciarSalas extends Window{
         this.addComponent(leiauteBotoes);
     }
 
+    public void ligaCampos()
+    {
+
+    }
+
     private class EventoAddRecurso implements Button.ClickListener
     {
         public void buttonClick(ClickEvent event) {
-            String prep = ""+quantRec.getValue() + "   " + nomeRec.getValue() ;
-            listaRecursos.addItem(prep);
+            Recurso r = new Recurso();
+            
+            listaRecursos.addItem(new Object[]
+            {(String)nomeRec.getValue(), Integer.parseInt((String)quantRec.getValue()), (String)descrRec.getValue()}, ++indexTabela);
+            nomeRec.setValue("");
+            quantRec.setValue("");
+            descrRec.setValue("");
+            
         }
     }
 
     private class EventoRemRecurso implements Button.ClickListener
     {
         public void buttonClick(ClickEvent event) {
-            listaRecursos.getValue();
+            Object o = listaRecursos.getValue();
+            o.toString();
         }
     }
 
@@ -178,6 +203,63 @@ public class JanelaGerenciarSalas extends Window{
                 System.out.println(listaSalas.getValue());
             }
 
+        }
+    }
+
+    private class EventoAddSala implements Button.ClickListener
+    {
+        public void buttonClick(ClickEvent event)
+        {
+            Hibernate h = new Hibernate();
+            h.beginTransaction();
+            {
+                for (Iterator i = listaRecursos.getItemIds().iterator(); i.hasNext();)
+                {
+                    int iid = (Integer) i.next();
+                    Item item = listaRecursos.getItem(iid);
+                    System.out.println(item.toString());
+
+
+
+                }
+
+                /*
+                ArrayList<Recurso> recs = new ArrayList();
+                Recurso r = new Recurso();
+                r.setNome((String)nomeRec.getValue());
+                r.setQuantidade(Integer.parseInt((String)quantRec.getValue()));
+                r.setComentarios((String)descrRec.getValue());
+                Recinto re = new Recinto();
+                re.setRecursos(null);
+                 * 
+                 */
+            }
+            h.endTransaction();
+        }
+    }
+
+
+
+
+    private class EventoNovaSala implements Button.ClickListener
+    {
+        public void buttonClick(ClickEvent event)
+        {
+            bNova.setCaption("Salvar");
+            bNova.removeListener(this);
+            bNova.addListener(this);
+            bEditar.setEnabled(false);
+            bDeletar.setEnabled(false);
+            numSala.setReadOnly(false);
+            localSala.setReadOnly(false);
+            capSala.setReadOnly(false);
+            tipoSala.setReadOnly(false);
+            addRec.setEnabled(true);
+            delRec.setEnabled(true);
+            nomeRec.setReadOnly(false);
+            quantRec.setReadOnly(false);
+            descrRec.setReadOnly(false);
+            listaRecursos.setReadOnly(false);
         }
     }
 }

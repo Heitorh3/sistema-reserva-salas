@@ -27,25 +27,29 @@ public class PainelDia extends Panel{
     Label textoRes;
     VerticalLayout leiaute;
     ClickListener listener;
+    VerticalLayout mainLeiaute;
 
 
     public PainelDia(ArrayList<Reserva> reservasDia, int dia)
     {
-        listener = null;     
-        //this.setHeight("50");
-        //this.setWidth("50");
+        listener = null;             
+
+        mainLeiaute = new VerticalLayout();
         leiaute = new VerticalLayout();
 
         this.dia = dia;
-        //this.setWidth("100");
-        //this.setHeight("100");
+        
         this.reservasDesteDia = reservasDia;
-        textoDia = new Label(""+dia);
-        textoRes = new Label(""+reservasDia.size()+" reservas");
+
+        textoDia = new Label(Integer.toString(dia));
+        textoRes = new Label(Integer.toString(reservasDia.size())+" reservas");
         leiaute.addComponent(textoDia);
-        leiaute.setComponentAlignment(textoDia, Alignment.TOP_LEFT);
+        //leiaute.setComponentAlignment(textoDia, Alignment.TOP_LEFT);
         leiaute.addComponent(textoRes);
-        leiaute.setComponentAlignment(textoRes, Alignment.BOTTOM_CENTER);
-        this.addComponent(leiaute);        
+        //leiaute.setComponentAlignment(textoRes, Alignment.BOTTOM_CENTER);
+        mainLeiaute.addComponent(leiaute);
+        mainLeiaute.setComponentAlignment(leiaute, Alignment.TOP_LEFT);
+        this.addComponent(mainLeiaute);
+        
     }
 }

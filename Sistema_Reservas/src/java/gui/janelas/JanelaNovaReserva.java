@@ -153,6 +153,7 @@ public class JanelaNovaReserva extends Window{
             mainLayout.setSpacing(true);
             mainLayout.addComponent(titulo);
             mainLayout.addComponent(nomeReserva);
+            mainLayout.addComponent(finalidade);
             mainLayout.addComponent(solicitante);
             mainLayout.addComponent(NSresponsavel);
             leiauteDia.addComponent(di);
@@ -171,8 +172,7 @@ public class JanelaNovaReserva extends Window{
             mainLayout.addComponent(leiauteIni);
             mainLayout.addComponent(repeticao);
             mainLayout.addComponent(leiauteFim);
-            mainLayout.addComponent(listaSalas);
-            mainLayout.addComponent(finalidade);  
+            mainLayout.addComponent(listaSalas);              
             mainLayout.addComponent(salvar);
             mainLayout.addComponent(cancelar);
             this.addComponent(mainLayout);

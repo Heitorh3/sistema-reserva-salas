@@ -45,7 +45,7 @@ public class Reserva implements Serializable
     @Column
     private String finalidade;              //descricao da finalidade    
     @ManyToOne
-    private Pessoa responsavel;             //o nome da pessoa responsavel pelo evento    
+    private String responsavel;             //o nome da pessoa responsavel pelo evento
     @ManyToOne
     private Pessoa solicitante;             //nome do solicitante, deve referenciar o usuario cadastrado na lista de usuarios    
     @ManyToOne
@@ -98,7 +98,7 @@ public class Reserva implements Serializable
      */
     public Reserva(String nomeEvento, String dataInicioEvento, String dataFimEvento,
             String horarioInicioEvento, String horarioFimEvento, String finalidade,
-            Pessoa responsavel, Pessoa solicitante, Recinto Sala, char repeticao) {
+            String responsavel, Pessoa solicitante, Recinto sala, char repeticao) {
         this.nomeReserva = nomeEvento;
         this.dataInicioEvento = dataInicioEvento;
         this.dataFimEvento = dataFimEvento;
@@ -212,7 +212,7 @@ public class Reserva implements Serializable
      *
      * @return Pessoa responsável
      */
-    public Pessoa getResponsavel() {
+    public String getResponsavel() {
         return responsavel;
     }
 
@@ -269,7 +269,7 @@ public class Reserva implements Serializable
      *
      * @param responsavel Pessoa com os dados do responsavel
      */
-    public void setResponsavel(Pessoa responsavel) {
+    public void setResponsavel(String responsavel) {
         this.responsavel = responsavel;
     }
 

@@ -23,6 +23,11 @@ public class Main {
         
         Pessoa p;
 
+        Recinto r = new Recinto();
+        Recurso rec = new Recurso();
+        rec.setRecinto(r);
+
+
         //pega todos os dados do banco e coloca numa lista
         h.beginTransaction();
             List<Pessoa> l = h.list(Pessoa.class);

@@ -5,6 +5,7 @@
 
 package gui.janelas;
 
+import com.vaadin.data.Item;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
@@ -14,7 +15,12 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
+import database.RecintoDAO;
+import database.RecursoDAO;
+import entidades.Recinto;
 import entidades.Recurso;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -255,11 +261,35 @@ public class JanelaGerenciarSalas extends Window{
     {
         public void buttonClick(ClickEvent event)
         {
+            Recinto r = new Recinto();
+            //if numSala.
+            r.setNumero(Integer.parseInt((String)numSala.getValue()));
+            r.setLocalizacao((String)localSala.getValue());
+            r.setCapacidade(Integer.parseInt((String)capSala.getValue()));
+            r.setTipo((String)tipoSala.getValue());
+            RecintoDAO rDAO = new RecintoDAO();
+            rDAO.inserir(r);
+
+            for (Iterator i = listaRecursos.getItemIds().iterator();i.hasNext();)
+            {
+                int iid = (Integer) i.next();
+                Item item = listaRecursos.getItem(iid);
+                RecursoDAO recsDAO = new RecursoDAO();
+                Recurso rec = new Recurso();
+                Recurso temp = new Recurso();
+                rec.setNome((String)item.getItemProperty("Nome").getValue());
+                rec.setQuantidade((Integer)item.getItemProperty("Quantidade").getValue());
+                rec.setComentarios((String)item.getItemProperty("Descrição").getValue());
+                rec.setRecinto(r);
+                recsDAO.inserir(rec);
+            }
+
+
+
             desligaCampos();
             bNova.setCaption("Nova Sala");
             bNova.removeListener(this);
             bNova.addListener(new EventoNovaSala());
-            //bNova.setEnabled(true);
         }
     }
 

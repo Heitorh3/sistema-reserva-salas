@@ -4,10 +4,19 @@ import entidades.Reserva;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author 0213101
+ */
 public class ReservaDAO implements OperacoesDAO
 {
     //Hibernate h = new Hibernate();
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean inserir(Object obj)
     {
@@ -21,6 +30,10 @@ public class ReservaDAO implements OperacoesDAO
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ArrayList pesquisar()
     {
@@ -34,6 +47,11 @@ public class ReservaDAO implements OperacoesDAO
         return res;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean editar(Object obj)
     {
@@ -48,6 +66,11 @@ public class ReservaDAO implements OperacoesDAO
         return true;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean excluir(Object obj)
     {

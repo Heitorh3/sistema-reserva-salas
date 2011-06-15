@@ -4,8 +4,17 @@ import entidades.Recinto;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author 0213101
+ */
 public class RecintoDAO implements OperacoesDAO{
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean inserir(Object obj) {
         h.beginTransaction();
@@ -19,6 +28,10 @@ public class RecintoDAO implements OperacoesDAO{
     }
 
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ArrayList pesquisar()
     {
@@ -32,6 +45,11 @@ public class RecintoDAO implements OperacoesDAO{
         return rs;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean editar(Object obj)
     {
@@ -50,6 +68,11 @@ public class RecintoDAO implements OperacoesDAO{
         return true;
     }
 
+    /**
+     * 
+     * @param obj
+     * @return
+     */
     @Override
     public boolean excluir(Object obj)
     {

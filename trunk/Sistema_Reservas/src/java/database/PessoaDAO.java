@@ -3,12 +3,24 @@ package database;
 import entidades.Pessoa;
 import java.util.*;
 
+/**
+ *
+ * @author 0213101
+ */
 public class PessoaDAO implements OperacoesDAO
 {
 
+    /**
+     *
+     */
     public PessoaDAO(){
     }
     
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean inserir(Object obj) 
     {
@@ -22,6 +34,10 @@ public class PessoaDAO implements OperacoesDAO
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     // Retorna todo o conteúdo da coleção, porem a pesquisa eh feita com determinados campos
     public ArrayList pesquisar()
@@ -36,6 +52,11 @@ public class PessoaDAO implements OperacoesDAO
         return ps;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean editar(Object obj)
     {
@@ -54,6 +75,11 @@ public class PessoaDAO implements OperacoesDAO
         return true;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean excluir(Object obj)
     {

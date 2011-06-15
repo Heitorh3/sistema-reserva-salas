@@ -2,7 +2,9 @@ package database;
 
 import java.util.ArrayList;
 
-public class ReservaDAO implements OperacoesDAO{
+public class ReservaDAO implements OperacoesDAO
+{
+    //Hibernate h = new Hibernate();
 
     @Override
     public boolean inserir(Object obj) {

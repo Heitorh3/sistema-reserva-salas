@@ -23,6 +23,7 @@ public class Main {
         
         Pessoa p;
 
+        //pega todos os dados do banco e coloca numa lista
         h.beginTransaction();
             List<Pessoa> l = h.list(Pessoa.class);
             System.out.println(l.toString());

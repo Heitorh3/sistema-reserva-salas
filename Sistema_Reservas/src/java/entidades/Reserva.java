@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  * A Classe Reserva contém os dados necessários para efetuar a reserva de uma sala
@@ -26,6 +27,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table
+@NamedQuery(name="Reserva.getByNomeReserva",query="SELECT r FROM Reserva r where r.getNomeReserva() = :parametro")
 public class Reserva implements Serializable
 {
     @Id

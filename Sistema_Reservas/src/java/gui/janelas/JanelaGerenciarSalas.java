@@ -162,7 +162,7 @@ public class JanelaGerenciarSalas extends Window{
         capSala.setReadOnly(true);
         tipoSala.setReadOnly(true);
         listaRecursos.setReadOnly(true);   //faz a magica
-        listaSalas.setReadOnly(true);
+        listaSalas.setEnabled(true);
         bDeletar.setEnabled(true);
         bNova.setEnabled(true);
         bEditar.setEnabled(true);
@@ -180,7 +180,7 @@ public class JanelaGerenciarSalas extends Window{
         capSala.setReadOnly(false);
         tipoSala.setReadOnly(false);
         listaRecursos.setReadOnly(false);    //faz a magica
-        listaSalas.setReadOnly(false);
+        listaSalas.setEnabled(false);
         bDeletar.setEnabled(false);
         //bNova.setEnabled(false);
         bEditar.setEnabled(false);
@@ -232,7 +232,7 @@ public class JanelaGerenciarSalas extends Window{
 
             bEditar.setCaption("Editar");
             bEditar.removeListener(this);
-            bEditar.addListener(new EventoEditarRecurso());
+            bEditar.addListener(new EventoEditarSala());
             desligaCampos();
             
         }

@@ -45,8 +45,8 @@ public class Reserva implements Serializable
     @Column
     private String horarioFimEvento;        //horario qndo o evento acaba no dia
     @Column
-    private String finalidade;              //descricao da finalidade    
-    @ManyToOne
+    private String finalidade;              //descricao da finalidade
+    @Column
     private String responsavel;             //o nome da pessoa responsavel pelo evento
     @ManyToOne
     private Pessoa solicitante;             //nome do solicitante, deve referenciar o usuario cadastrado na lista de usuarios    

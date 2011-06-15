@@ -27,22 +27,23 @@ public class Main {
         Recurso rec = new Recurso();
         rec.setRecinto(r);
 
-
+        /*
         //pega todos os dados do banco e coloca numa lista
         h.beginTransaction();
             List<Pessoa> l = h.list(Pessoa.class);
             System.out.println(l.toString());
         h.endTransaction();
-
-
-        /*
-        //Adiciona tupla no banco.
-        h.beginTransaction();
-            p = new Pessoa("Vinicius","sarado_da_praia_2008@zipmail.com","5197287877","mestre","master","chief",true,false);
-            h.saveOnly(p);
-        h.endTransaction();//
          *
          */
+
+
+        
+        //Adiciona tupla no banco.
+        h.beginTransaction();
+            p = new Pessoa("Vinicius","sarado_2008@zipmail.com","5197287877","mestre","master","chief",true,false);
+            h.saveOnly(p);
+        h.endTransaction();//
+        
 
         /*
         //Modifica tupla.

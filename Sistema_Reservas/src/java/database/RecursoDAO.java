@@ -4,8 +4,17 @@ import entidades.Recurso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author 0213101
+ */
 public class RecursoDAO implements OperacoesDAO{
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean inserir(Object obj)
     {
@@ -19,6 +28,10 @@ public class RecursoDAO implements OperacoesDAO{
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ArrayList pesquisar()
     {
@@ -32,6 +45,11 @@ public class RecursoDAO implements OperacoesDAO{
         return recs;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean editar(Object obj)
     {
@@ -50,6 +68,11 @@ public class RecursoDAO implements OperacoesDAO{
         return true;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean excluir(Object obj)
     {

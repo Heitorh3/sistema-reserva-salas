@@ -28,12 +28,12 @@ public class JanelaNovaReserva extends Window{
     Panel labelResponsavel;
     TextField nomeReserva;
     TextField solicitante;
-    ComboBox NSresponsavel;
+    TextField NSresponsavel;
     TextField tfDia;
     TextField tfMes;
     TextField aAno;
     TextField finalidade;
-    NativeSelect NSsala;
+    //NativeSelect NSsala;
     ComboBox recsSala;
     OptionGroup repeticao;
     Button salvar;
@@ -77,8 +77,7 @@ public class JanelaNovaReserva extends Window{
             //neste setValue vai o nome do solicitante logado no sistema
             solicitante.setValue("Manolo");
             solicitante.setReadOnly(true);
-            NSresponsavel = new ComboBox("Responsável");
-            NSresponsavel.setNullSelectionAllowed(false);
+            NSresponsavel = new TextField("Responsável");
             
             repeticao = new OptionGroup("Repetição");
             repeticao.addItem("Diariamente");

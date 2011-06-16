@@ -99,7 +99,7 @@ public class Recinto implements Serializable
 
     @Override
     public String toString() {
-        return numero + "   |   " + localizacao + "   |   " + capacidade + "   |   " + tipo;
+        return "Número "+ numero + " | " + "Localização " + localizacao + " | " + "Capacidade " +  capacidade + " | " + "Tipo " +  tipo;
     }
 
     public String toStringReal()

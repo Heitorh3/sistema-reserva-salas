@@ -27,11 +27,11 @@ public class PainelBotoes extends Panel{
     Button botaoPesquisar;
     HorizontalLayout leiaute;
     Window win;
-    FormLogin pl;
+    PainelLogin pl;
 
     public PainelBotoes(Window win)
     {
-        pl = new FormLogin();
+        pl = new PainelLogin();
         this.win = win;
         lInicio = new Label("<b>Sistema de Reserva de Salas 2011</b>",Label.CONTENT_XHTML);
         botaoLogin = new Button();

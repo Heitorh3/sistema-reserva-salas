@@ -6,6 +6,8 @@
 package gui.janelas;
 
 import com.vaadin.data.Item;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
@@ -44,7 +46,9 @@ public class JanelaGerenciarSalas extends Window{
     TextField nomeRec;
     TextField quantRec;
     TextField descrRec;
-    static int indexTabela;
+    RecursoDAO recursoDAO = new RecursoDAO();
+    RecintoDAO recintoDAO = new RecintoDAO();
+    
 
     public JanelaGerenciarSalas()
     {
@@ -70,16 +74,17 @@ public class JanelaGerenciarSalas extends Window{
         listaSalas    = new ComboBox("Sala presentes no sistema");
         listaSalas.setImmediate(true);
         listaSalas.setNullSelectionAllowed(false);
+        listaSalas.addListener(new EventoMostraDados());
         
         
         numSala       = new TextField("Número da Sala");        
-        numSala.setReadOnly(true);
+        //numSala.setReadOnly(true);
         localSala     = new TextField("Local da Sala");
-        localSala.setReadOnly(true);
+        //localSala.setReadOnly(true);
         capSala       = new TextField("Capacidade");
-        capSala.setReadOnly(true);
+        //capSala.setReadOnly(true);
         tipoSala      = new TextField("Tipo de Sala");
-        tipoSala.setReadOnly(true);
+        //tipoSala.setReadOnly(true);
         
         listaRecursos = new Table();
         listaRecursos.setEditable(true);
@@ -88,26 +93,28 @@ public class JanelaGerenciarSalas extends Window{
         listaRecursos.addContainerProperty("Nome", String.class, null);
         listaRecursos.addContainerProperty("Quantidade", Integer.class, null);
         listaRecursos.addContainerProperty("Descrição", String.class, null);
-        //indexTabela = 1;
+        //listaRecursos.setReadOnly(true);
 
 
         addRec = new Button("Adicionar");
         addRec.addListener(new EventoAddRecurso());
-        addRec.setEnabled(false);
+        //addRec.setEnabled(false);
         //ediRec = new Button("Editar");
         //ediRec.setEnabled(false);
         delRec = new Button("Remover");
-        delRec.setEnabled(false);
+        //delRec.setEnabled(false);
         delRec.addListener(new EventoRemRecurso());
         nomeRec = new TextField("Nome:");
         quantRec = new TextField("Quantidade:");
         descrRec = new TextField("Descrição:");
-        nomeRec.setReadOnly(true);
-        quantRec.setReadOnly(true);
-        descrRec.setReadOnly(true);
-        listaRecursos.setReadOnly(true);
+        //nomeRec.setReadOnly(true);
+        //quantRec.setReadOnly(true);
+        //descrRec.setReadOnly(true);
+        
 
-        listaSalas.setWidth("300"); //??
+        listaSalas.setWidth("300"); 
+        adicionaSalasComboBox();
+        desligaCampos();
 
 
         /*
@@ -196,14 +203,46 @@ public class JanelaGerenciarSalas extends Window{
         quantRec.setReadOnly(false);
         descrRec.setReadOnly(false);
     }
+    
+    public void limpaCampos()
+    {
+        numSala.setValue("");
+        localSala.setValue("");
+        capSala.setValue("");
+        tipoSala.setValue("");        
+        listaSalas.removeAllItems();
+        bDeletar.setEnabled(false);
+        //bNova.setEnabled(false);
+        bEditar.setEnabled(false);
+        addRec.setEnabled(true);
+        delRec.setEnabled(true);
+        nomeRec.setValue("");        
+        quantRec.setValue("");        
+        descrRec.setValue("");        
+    }
+    
+    public void adicionaSalasComboBox()
+    {
+        //recintoDAO = new RecintoDAO();
+        ArrayList<Recinto> rs = recintoDAO.pesquisar();
+        for (Recinto r : rs)
+        {
+            listaSalas.addItem(r);
+        }
+    
+    }
 
     private class EventoAddRecurso implements Button.ClickListener
     {
         public void buttonClick(ClickEvent event) {
             Recurso r = new Recurso();
-            
+            listaRecursos.setEnabled(true);            
+            int i = listaRecursos.size();
+            //System.out.println(i);
             listaRecursos.addItem(new Object[]
-            {(String)nomeRec.getValue(), Integer.parseInt((String)quantRec.getValue()), (String)descrRec.getValue()}, ++indexTabela);
+            {(String)nomeRec.getValue(), Integer.parseInt((String)quantRec.getValue()), (String)descrRec.getValue()}, ++i);
+                
+            //System.out.println(            listaRecursos.toString());
             nomeRec.setValue("");
             quantRec.setValue("");
             descrRec.setValue("");
@@ -213,15 +252,38 @@ public class JanelaGerenciarSalas extends Window{
 
     private class EventoEditarSala implements Button.ClickListener
     {
-        public void buttonClick(ClickEvent event) {
+        public void buttonClick(ClickEvent event)
+        {
             //pega a sala que esta selecionada no combobox e devolve
             ligaCampos();
+            listaRecursos.setEditable(true);
             listaSalas.setEnabled(false);
             bNova.setEnabled(false);
             bEditar.setCaption("Salvar Alterações");
             bEditar.removeListener(this);
             bEditar.addListener(new EventoSalvaSalaAlterada());
             bEditar.setEnabled(true);
+            
+            Recinto r = (Recinto) listaSalas.getValue();
+            numSala.setValue(r.getNumero());
+            capSala.setValue(r.getCapacidade());
+            localSala.setValue(r.getLocalizacao());
+            tipoSala.setValue(r.getTipo());
+            
+            //RecursoDAO recDAO = new RecursoDAO();
+            ArrayList<Recurso> recs = recursoDAO.pesquisar();
+            //System.out.println(recs.toString());            
+            int i = 0;
+            while (!recs.isEmpty())
+            {
+                Recurso temp = recs.remove(0);
+                System.out.println("dentro do while " + temp);
+                if (temp.getIdRecinto() == r.getIdRecinto())
+                {
+                    System.out.println("dentro do if " + temp);
+                    listaRecursos.addItem(new Object[]{temp.getNome(),temp.getQuantidade(),temp.getComentarios()}, ++i);
+                }
+            }
         }
     }
 
@@ -235,11 +297,24 @@ public class JanelaGerenciarSalas extends Window{
     private class EventoSalvaSalaAlterada implements Button.ClickListener {
 
         public void buttonClick(ClickEvent event) {
+            
+            //editar todos os recursos primeiro, verificar quais foram retirados e quais foram adicionados e quais foram modificados
+            //depois editar a sala
+            
+            listaSalas.removeListener(new EventoMostraDados());
+            
+            Recinto r = (Recinto) listaSalas.getValue();
+            
+            
+            recintoDAO.editar(r);
+            
 
             bEditar.setCaption("Editar");
             bEditar.removeListener(this);
             bEditar.addListener(new EventoEditarSala());
+            limpaCampos();
             desligaCampos();
+            listaSalas.addListener(new EventoMostraDados());
             
         }
     }
@@ -267,21 +342,20 @@ public class JanelaGerenciarSalas extends Window{
             r.setLocalizacao((String)localSala.getValue());
             r.setCapacidade(Integer.parseInt((String)capSala.getValue()));
             r.setTipo((String)tipoSala.getValue());
-            RecintoDAO rDAO = new RecintoDAO();
-            rDAO.inserir(r);
+            
+            recintoDAO.inserir(r);
 
             for (Iterator i = listaRecursos.getItemIds().iterator();i.hasNext();)
             {
                 int iid = (Integer) i.next();
-                Item item = listaRecursos.getItem(iid);
-                RecursoDAO recsDAO = new RecursoDAO();
+                Item item = listaRecursos.getItem(iid);                
                 Recurso rec = new Recurso();
                 Recurso temp = new Recurso();
                 rec.setNome((String)item.getItemProperty("Nome").getValue());
                 rec.setQuantidade((Integer)item.getItemProperty("Quantidade").getValue());
                 rec.setComentarios((String)item.getItemProperty("Descrição").getValue());
                 rec.setRecinto(r);
-                recsDAO.inserir(rec);
+                recursoDAO.inserir(rec);
             }
 
 
@@ -290,6 +364,9 @@ public class JanelaGerenciarSalas extends Window{
             bNova.setCaption("Nova Sala");
             bNova.removeListener(this);
             bNova.addListener(new EventoNovaSala());
+            listaSalas.removeAllItems();
+            listaRecursos.removeAllItems();
+            adicionaSalasComboBox();
         }
     }
 
@@ -305,5 +382,36 @@ public class JanelaGerenciarSalas extends Window{
             bNova.addListener(new EventoAddSala());
             ligaCampos();
         }
+    }
+    
+    private class EventoMostraDados implements ValueChangeListener
+    {
+        public void valueChange(ValueChangeEvent event) 
+        {
+            ligaCampos();
+            
+            Recinto r = (Recinto) listaSalas.getValue();
+            numSala.setValue(r.getNumero());
+            capSala.setValue(r.getCapacidade());
+            localSala.setValue(r.getLocalizacao());
+            tipoSala.setValue(r.getTipo());
+            
+            //RecursoDAO recDAO = new RecursoDAO();
+            ArrayList<Recurso> recs = recursoDAO.pesquisar();
+            listaRecursos.removeAllItems();
+            int i = 0;
+            while (!recs.isEmpty())
+            {
+                Recurso temp = recs.remove(0);
+                System.out.println("dentro do while " + temp);
+                if (temp.getIdRecinto() == r.getIdRecinto())
+                {
+                    System.out.println("dentro do if " + temp);
+                    listaRecursos.addItem(new Object[]{temp.getNome(),temp.getQuantidade(),temp.getComentarios()}, ++i);
+                }
+            }
+            desligaCampos();              
+            listaRecursos.setEditable(false);
+        }        
     }
 }

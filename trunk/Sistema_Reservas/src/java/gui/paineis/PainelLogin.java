@@ -8,19 +8,24 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import database.PessoaDAO;
+import entidades.Pessoa;
+import java.util.ArrayList;
 
 
 /**
  *
  * @author 0213101
  */
-public class FormLogin extends Panel {
+public class PainelLogin extends Panel {
 
     TextField usuario;
     TextField senha;
     Button logar;
+    PessoaDAO pessoaDAO = new PessoaDAO();
+    static Pessoa pessoaLogada;
 
-    public FormLogin() {
+    public PainelLogin() {
         usuario = new TextField("Usuário");
         senha = new TextField("Senha");
         logar = new Button("Logar");
@@ -40,7 +45,20 @@ public class FormLogin extends Panel {
     {
 
         public void buttonClick(ClickEvent event) {
-            System.out.println("logou");
+            ArrayList<Pessoa> pessoas = pessoaDAO.pesquisar();
+            for (Pessoa p : pessoas)
+            {
+                if ((p.getLogin().equals(usuario.getValue())) && (p.getSenha().equals(senha.getValue())))
+                {
+                    System.out.println("logou");                    
+                    pessoaLogada = p;
+                }
+                else System.out.println("Nao logou");
+            }
+            
+            
+            
+            
             setVisible(false);
         }
 

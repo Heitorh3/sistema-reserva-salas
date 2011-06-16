@@ -96,6 +96,10 @@ public class Recurso implements Serializable
     public void setRecinto(Recinto recinto) {
         this.recinto = recinto;
     }
+    
+    public int getIdRecinto() {        
+        return recinto.getIdRecinto();
+    }
 
 
     @Override
@@ -134,4 +138,6 @@ public class Recurso implements Serializable
     public String toString() {
         return nomeRecurso + "  " +quantidade + "  " +  comentarios;
     }
+
+    
 }

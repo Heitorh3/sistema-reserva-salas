@@ -48,7 +48,7 @@ public class JanelaGerenciarSalas extends Window{
     TextField descrRec;
     RecursoDAO recursoDAO = new RecursoDAO();
     RecintoDAO recintoDAO = new RecintoDAO();
-    
+    boolean alterandoSala = false;
 
     public JanelaGerenciarSalas()
     {
@@ -298,6 +298,7 @@ public class JanelaGerenciarSalas extends Window{
 
         public void buttonClick(ClickEvent event) {
             
+            alterandoSala = true;
             //editar todos os recursos primeiro, verificar quais foram retirados e quais foram adicionados e quais foram modificados
             //depois editar a sala
             
@@ -388,30 +389,34 @@ public class JanelaGerenciarSalas extends Window{
     {
         public void valueChange(ValueChangeEvent event) 
         {
-            ligaCampos();
-            
-            Recinto r = (Recinto) listaSalas.getValue();
-            numSala.setValue(r.getNumero());
-            capSala.setValue(r.getCapacidade());
-            localSala.setValue(r.getLocalizacao());
-            tipoSala.setValue(r.getTipo());
-            
-            //RecursoDAO recDAO = new RecursoDAO();
-            ArrayList<Recurso> recs = recursoDAO.pesquisar();
-            listaRecursos.removeAllItems();
-            int i = 0;
-            while (!recs.isEmpty())
+            if (!alterandoSala)
             {
-                Recurso temp = recs.remove(0);
-                System.out.println("dentro do while " + temp);
-                if (temp.getIdRecinto() == r.getIdRecinto())
+                ligaCampos();
+
+                Recinto r = (Recinto) listaSalas.getValue();
+                numSala.setValue(r.getNumero());
+                capSala.setValue(r.getCapacidade());
+                localSala.setValue(r.getLocalizacao());
+                tipoSala.setValue(r.getTipo());
+
+                //RecursoDAO recDAO = new RecursoDAO();
+                ArrayList<Recurso> recs = recursoDAO.pesquisar();
+                listaRecursos.removeAllItems();
+                int i = 0;
+                while (!recs.isEmpty())
                 {
-                    System.out.println("dentro do if " + temp);
-                    listaRecursos.addItem(new Object[]{temp.getNome(),temp.getQuantidade(),temp.getComentarios()}, ++i);
+                    Recurso temp = recs.remove(0);
+                    System.out.println("dentro do while " + temp);
+                    if (temp.getIdRecinto() == r.getIdRecinto())
+                    {
+                        System.out.println("dentro do if " + temp);
+                        listaRecursos.addItem(new Object[]{temp.getNome(),temp.getQuantidade(),temp.getComentarios()}, ++i);
+                    }
                 }
+                desligaCampos();              
+                listaRecursos.setEditable(false);
             }
-            desligaCampos();              
-            listaRecursos.setEditable(false);
+            else alterandoSala =   false;
         }        
     }
 }

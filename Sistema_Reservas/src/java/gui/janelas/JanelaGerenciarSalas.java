@@ -315,6 +315,7 @@ public class JanelaGerenciarSalas extends Window{
             bEditar.addListener(new EventoEditarSala());
             limpaCampos();
             desligaCampos();
+            adicionaSalasComboBox();
             listaSalas.addListener(new EventoMostraDados());
             
         }

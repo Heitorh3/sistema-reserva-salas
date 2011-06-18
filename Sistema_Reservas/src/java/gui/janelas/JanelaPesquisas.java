@@ -56,7 +56,7 @@ public class JanelaPesquisas extends Window
         botaoDispHorario.addListener(new EventoPesqSalaPorHorario());
         leiaute.addComponent(botaoDispHorario);
 
-        Button botaoResponsavelReserva = new Button("Pesquisar Responsável por Reserva");
+        Button botaoResponsavelReserva = new Button("Pesquisar Responsável por Sala Reservada");
         botaoResponsavelReserva.addListener(new EventoPesquisaResponsavel());
         leiaute.addComponent(botaoResponsavelReserva);
 

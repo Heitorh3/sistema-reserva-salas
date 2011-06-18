@@ -26,7 +26,7 @@ public class Pessoa implements Serializable
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column
-    private int IdPessoa;           //chave primaria no Hibernate
+    private int idPessoa;           //chave primaria no Hibernate
     @Column
     private String nomePessoa;
     @Column
@@ -61,7 +61,7 @@ public class Pessoa implements Serializable
     }
 
     public int getIdPessoa() {
-        return IdPessoa;
+        return idPessoa;
     }
 
     public void setBloqueado(boolean bloqueado) {
@@ -151,7 +151,7 @@ public class Pessoa implements Serializable
             return false;
         }
         final Pessoa other = (Pessoa) obj;
-        if (this.IdPessoa != other.IdPessoa) {
+        if (this.idPessoa != other.idPessoa) {
             return false;
         }
         if ((this.nomePessoa == null) ? (other.nomePessoa != null) : !this.nomePessoa.equals(other.nomePessoa)) {
@@ -185,7 +185,7 @@ public class Pessoa implements Serializable
     public int hashCode() {
         int hash = 5;
         int intAdmin, intBloq;
-        hash = 67 * hash + this.IdPessoa;
+        hash = 67 * hash + this.idPessoa;
         hash = 67 * hash + (this.nomePessoa != null ? this.nomePessoa.hashCode() : 0);
         hash = 67 * hash + (this.email != null ? this.email.hashCode() : 0);
         hash = 67 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);

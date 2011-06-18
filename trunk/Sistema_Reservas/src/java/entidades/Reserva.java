@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.NamedQuery;
@@ -48,9 +49,11 @@ public class Reserva implements Serializable
     private String finalidade;              //descricao da finalidade
     @Column
     private String responsavel;             //o nome da pessoa responsavel pelo evento
-    @ManyToOne
+    @ManyToOne(targetEntity=Pessoa.class)
+    @JoinColumn(name="idPessoa")
     private Pessoa solicitante;             //nome do solicitante, deve referenciar o usuario cadastrado na lista de usuarios    
-    @ManyToOne
+    @ManyToOne(targetEntity=Recinto.class)
+    @JoinColumn(name="idRecinto")
     private Recinto sala;                   //--referencia externa--
     @Column
     private char repeticao;

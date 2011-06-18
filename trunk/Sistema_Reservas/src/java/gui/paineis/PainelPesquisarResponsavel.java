@@ -12,7 +12,11 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import database.PessoaDAO;
+import database.ReservaDAO;
+import entidades.Reserva;
 import gui.janelas.JanelaPesquisas;
+import java.util.ArrayList;
 
 
 /**
@@ -21,13 +25,18 @@ import gui.janelas.JanelaPesquisas;
  */
 public class PainelPesquisarResponsavel extends Panel{
     Button voltar;
+    Table resultados;
+    Button pesquisar;
+    PessoaDAO pessoaDAO = new PessoaDAO();
+    ReservaDAO reservaDAO = new ReservaDAO();
+    TextField sala;
 
     public PainelPesquisarResponsavel() {
-        Table resultados = new Table("Resultados");
+        resultados = new Table("Resultados");
         resultados.addContainerProperty("Nome", String.class, null);
-        resultados.addContainerProperty("E-mail", String.class, null);
-        resultados.addContainerProperty("Telefone", String.class, null);
-        resultados.addContainerProperty("Cargo", String.class, null);
+        //resultados.addContainerProperty("E-mail", String.class, null);
+        //resultados.addContainerProperty("Telefone", String.class, null);
+        //resultados.addContainerProperty("Cargo", String.class, null);
 
 
 
@@ -47,9 +56,9 @@ public class PainelPesquisarResponsavel extends Panel{
             }
         });
 
-        Button pesquisar = new Button("Pesquisar");
-
-        TextField sala = new TextField("Sala Reservada");
+        pesquisar = new Button("Pesquisar");
+        pesquisar.addListener(new EventoPesquisaResponsavel());
+        sala = new TextField("Sala Reservada");
         leiaute.addComponent(sala);
         leiaute.addComponent(pesquisar);
         leiaute.addComponent(voltar);
@@ -62,8 +71,26 @@ public class PainelPesquisarResponsavel extends Panel{
 
         this.addComponent(leiH);
     }
-    //retornar responsavel das reservas q tem sala do numero do sala.getValue()
-    //select pessoa p from reservas r where Sala.getNumero() = sala.getValue()
+    
+    private class EventoPesquisaResponsavel implements Button.ClickListener
+    {
+        public void buttonClick(Button.ClickEvent event) {
+            int i = 0;
+            ArrayList<Reserva> res = reservaDAO.pesquisar();
+            while (!res.isEmpty())
+            {
+                Reserva r = res.remove(0);
+                if (r.getSala().getNumero() == Integer.parseInt((String)sala.getValue()))
+                {
+                    resultados.addItem(
+                            new Object[] {r.getResponsavel()},++i
+                                    );
+                }
+            }
+            
+            
+        }
+    }
 
 
 

@@ -7,12 +7,14 @@ package gui.paineis;
 
 
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import database.ReservaDAO;
 import gui.janelas.JanelaPesquisas;
 
 
@@ -21,6 +23,7 @@ import gui.janelas.JanelaPesquisas;
  * @author 0213101
  */
 public class PainelPesquisaReservas extends Panel{
+    ReservaDAO reservaDAO = new ReservaDAO();
     Button voltar;
 
     public PainelPesquisaReservas() {
@@ -48,6 +51,7 @@ public class PainelPesquisaReservas extends Panel{
             }
         });
         Button pesquisar = new Button("Pesquisar");
+        pesquisar.addListener(new EventoPesquisaReserva());
         TextField nome = new TextField("Nome da Reserva");
         TextField responsavel = new TextField("Responsável");
         TextField solicitante = new TextField("Solicitante");
@@ -57,6 +61,8 @@ public class PainelPesquisaReservas extends Panel{
         TextField finalidade = new TextField("Finalidade");
         TextField tipo = new TextField("Tipo");
         FormLayout leiaute = new FormLayout();
+        
+        
         leiaute.addComponent(nome);
         leiaute.addComponent(responsavel);
         leiaute.addComponent(solicitante);
@@ -73,6 +79,14 @@ public class PainelPesquisaReservas extends Panel{
         leiH.addComponent(resultados);
         this.addComponent(leiH);
 
+    }
+    
+    private class EventoPesquisaReserva implements Button.ClickListener
+    {
+
+        public void buttonClick(ClickEvent event) {
+        }
+        
     }
 
 

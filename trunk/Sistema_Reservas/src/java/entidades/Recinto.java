@@ -1,4 +1,4 @@
-/*
+/**
  * Recinto eh a classe que guarda os dados de cada sala do estabelecimento.
  * Contem um lista de recursos presente na sala. E um identificador
  * que especifica se eh sala de aula, laboratorio, auditorio, etc.

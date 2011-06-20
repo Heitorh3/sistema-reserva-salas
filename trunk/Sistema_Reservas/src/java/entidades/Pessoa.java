@@ -131,8 +131,7 @@ public class Pessoa implements Serializable
 
     @Override
     public String toString() {
-        return nomePessoa + "   |   " + email + "   |   " + telefone
-                + "   |   " + cargo + "   |   " + login + "   |   " + senha;
+        return nomePessoa;
     }
 
     public String toStringReal()

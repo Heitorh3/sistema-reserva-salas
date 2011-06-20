@@ -11,6 +11,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Window;
 import gui.janelas.JanelaGerenciarSalas;
+import gui.janelas.JanelaGerenciarUsuarios;
 import gui.janelas.JanelaPesquisas;
 
 /**
@@ -21,10 +22,11 @@ public class PainelBotoes extends Panel{
 
     Label lInicio;
     Button botaoLogin;
-    Button botaoSair;
+    //Button botaoSair;
     Button botaoNovaReserva;
     Button botaoConsultaSala;
     Button botaoPesquisar;
+    Button gerenciarUsuarios;
     HorizontalLayout leiaute;
     Window win;
     PainelLogin pl;
@@ -37,8 +39,8 @@ public class PainelBotoes extends Panel{
         botaoLogin = new Button();
         botaoLogin.setCaption("Entrar no sistema");
         botaoLogin.addListener(new EventoLogin());
-        botaoSair = new Button();
-        botaoSair.setCaption("Encerrar");
+        //botaoSair = new Button();
+        //botaoSair.setCaption("Encerrar");
         
         botaoPesquisar = new Button("Pesquisar...");
         botaoPesquisar.addListener(new EventoPesquisar());
@@ -48,15 +50,21 @@ public class PainelBotoes extends Panel{
         *
         */
         botaoConsultaSala = new Button();
-        botaoConsultaSala.setCaption("Gerenciar Salas ...");
+        botaoConsultaSala.setCaption("Gerenciar Salas...");
         botaoConsultaSala.addListener(new EventoNovaSala());
         
+        gerenciarUsuarios = new Button("Gerenciar Usuários...");
+        gerenciarUsuarios.addListener(new EventoGerUsers());
+        
+        
         leiaute = new HorizontalLayout();
+        leiaute.setSpacing(true);
         leiaute.addComponent(pl);
         pl.setVisible(false);
         leiaute.addComponent(botaoLogin);
-        leiaute.addComponent(botaoSair);
+        //leiaute.addComponent(botaoSair);
         leiaute.addComponent(botaoConsultaSala);
+        leiaute.addComponent(gerenciarUsuarios);
         leiaute.addComponent(botaoPesquisar);
         this.addComponent(lInicio);
         this.addComponent(leiaute);
@@ -73,6 +81,18 @@ public class PainelBotoes extends Panel{
         {
             JanelaGerenciarSalas FNS = new JanelaGerenciarSalas();
             win.addWindow(FNS);
+
+        }
+
+    }
+    
+    private class EventoGerUsers implements Button.ClickListener
+    {
+    @Override
+        public void buttonClick(Button.ClickEvent event)
+        {
+            JanelaGerenciarUsuarios JGU = new JanelaGerenciarUsuarios();
+            win.addWindow(JGU);
 
         }
 

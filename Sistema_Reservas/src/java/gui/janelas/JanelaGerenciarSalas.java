@@ -67,6 +67,7 @@ public class JanelaGerenciarSalas extends Window{
         dadosSala = new Panel("Dados Sala");
 
         bDeletar      = new Button("Excluir Sala");
+        bDeletar.addListener(new EventoExclusao());
         bNova         = new Button("Nova Sala");
         bNova.addListener(new EventoNovaSala());
         bEditar       = new Button("Editar Sala");
@@ -75,6 +76,7 @@ public class JanelaGerenciarSalas extends Window{
         listaSalas.setImmediate(true);
         listaSalas.setNullSelectionAllowed(false);
         listaSalas.addListener(new EventoMostraDados());
+        listaSalas.setWidth("90%");
         
         
         numSala       = new TextField("Número da Sala");        
@@ -283,11 +285,9 @@ public class JanelaGerenciarSalas extends Window{
                 int i = 0;
                 while (!recs.isEmpty())
                 {
-                    Recurso temp = recs.remove(0);
-                    System.out.println("dentro do while " + temp);
+                    Recurso temp = recs.remove(0);                    
                     if (temp.getIdRecinto() == r.getIdRecinto())
-                    {
-                        System.out.println("dentro do if " + temp);
+                    {                        
                         listaRecursos.addItem(new Object[]{temp.getNome(),temp.getQuantidade(),temp.getComentarios()}, ++i);
                     }
                 }
@@ -305,8 +305,6 @@ public class JanelaGerenciarSalas extends Window{
     private class EventoSalvaSalaAlterada implements Button.ClickListener {
 
         public void buttonClick(ClickEvent event) {
-            
-            alterandoSala = true;
             //editar todos os recursos primeiro, verificar quais foram retirados e quais foram adicionados e quais foram modificados
             //depois editar a sala
             
@@ -314,8 +312,8 @@ public class JanelaGerenciarSalas extends Window{
             
             Recinto r = (Recinto) listaSalas.getValue();
             
-            
-            recintoDAO.editar(r);
+            System.out.println(r.toStringReal());
+            //recintoDAO.editar(r);
             
 
             bEditar.setCaption("Editar");
@@ -369,7 +367,7 @@ public class JanelaGerenciarSalas extends Window{
             }
 
 
-
+            limpaCampos();
             desligaCampos();
             bNova.setCaption("Nova Sala");
             bNova.removeListener(this);
@@ -427,7 +425,50 @@ public class JanelaGerenciarSalas extends Window{
                 desligaCampos();              
                 listaRecursos.setEditable(false);
             }
-            //else alterandoSala =   false;
+            else listaSalas.setEnabled(true);
         }        
+    }
+    
+    private class EventoExclusao implements Button.ClickListener
+    {
+        public void buttonClick(ClickEvent event) {
+            listaSalas.setEnabled(false);
+            bDeletar.setCaption("Clique aqui para confirmar a exclusão.");
+            bDeletar.removeListener(this);
+            bDeletar.addListener(new EventoExcluirSala());
+            
+            bNova.setEnabled(false);
+            bEditar.setEnabled(false);
+            
+        }        
+    }
+    
+    private class EventoExcluirSala implements Button.ClickListener
+    {
+        public void buttonClick(ClickEvent event) {            
+            Recinto r = (Recinto) listaSalas.getValue();
+            
+            ArrayList<Recurso> recs = recursoDAO.pesquisar();
+            while (!recs.isEmpty())
+            {
+                Recurso rec = recs.remove(0);
+                if (rec.getIdRecinto() == r.getIdRecinto())
+                    recursoDAO.excluir(rec);
+            }            
+            
+            recintoDAO.excluir(r);            
+            
+            limpaCampos();
+            desligaCampos();
+            listaSalas.setEnabled(false);
+            listaRecursos.removeAllItems();            
+            listaSalas.removeAllItems();
+            bEditar.setEnabled(true);
+            bNova.setEnabled(true);
+            bDeletar.setCaption("Excluir Sala");
+            bDeletar.removeListener(this);
+            bDeletar.addListener(new EventoExclusao());
+            adicionaSalasComboBox();            
+        }
     }
 }

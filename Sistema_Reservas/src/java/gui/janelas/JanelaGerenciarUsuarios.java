@@ -273,20 +273,21 @@ public class JanelaGerenciarUsuarios extends Window {
     
     private class EventoExclusao implements Button.ClickListener
     {
-
         public void buttonClick(ClickEvent event) {
-            users.setEnabled(false);
-            excluir.setCaption("Clique para confirmar exclusão.");
-            excluir.removeListener(this);
-            excluir.addListener(new EventoExcluirUsuario());
-            editar.setEnabled(false);
-            addUser.setEnabled(false);            
+            if (users.getValue() != null)
+            {
+                users.setEnabled(false);
+                excluir.setCaption("Clique para confirmar exclusão.");
+                excluir.removeListener(this);
+                excluir.addListener(new EventoExcluirUsuario());
+                editar.setEnabled(false);
+                addUser.setEnabled(false);            
+            }
         }
     }
     
     private class EventoExcluirUsuario implements Button.ClickListener
     {
-
         public void buttonClick(ClickEvent event) {
             Pessoa p = (Pessoa) users.getValue();
             pessoaDAO.excluir(p);
@@ -297,9 +298,8 @@ public class JanelaGerenciarUsuarios extends Window {
             editar.setEnabled(true);
             users.removeAllItems();            
             preencheCB();
+            limpaCampos();
             users.setEnabled(true);            
-        }
-        
-    }
-    
+        }        
+    }    
 }

@@ -23,7 +23,7 @@ public class PainelLogin extends Panel {
     TextField senha;
     Button logar;
     PessoaDAO pessoaDAO = new PessoaDAO();
-    static Pessoa pessoaLogada;
+    Pessoa pessoaLogada;
 
     public PainelLogin() {
         usuario = new TextField("Usuário");
@@ -51,10 +51,10 @@ public class PainelLogin extends Panel {
                 //System.out.println(p.toStringReal());
                 if ((p.getLogin().equals(usuario.getValue())) && (p.getSenha().equals(senha.getValue())))
                 {
-                    System.out.println("logou");                    
+                    getWindow().showNotification("Logado.");
                     pessoaLogada = p;
                 }
-                else System.out.println("Nao logou");
+                else getWindow().showNotification("Falha no Login.");
             }
             
             

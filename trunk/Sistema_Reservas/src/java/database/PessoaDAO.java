@@ -26,8 +26,7 @@ public class PessoaDAO implements OperacoesDAO
     {
         h.beginTransaction();
         {
-            Pessoa p = new Pessoa();
-            p = (Pessoa) obj;
+            Pessoa p = (Pessoa) obj;
             h.saveOnly(p);
         }
         h.endTransaction();
@@ -61,7 +60,7 @@ public class PessoaDAO implements OperacoesDAO
     public boolean editar(Object obj)
     {
         Pessoa p = (Pessoa) obj;
-        int P = 0;
+        //int P = 0;
         h.beginTransaction();
         {
             //recinto q vem da interface jah editado
@@ -71,7 +70,7 @@ public class PessoaDAO implements OperacoesDAO
             //o valor de r(atualizado) vai no valor do banco
             p1 = p;
             //atualiza o r1 que recebe os valores de r(atualizado)
-            int i = 0;
+            //int i = 0;
             h.updateOnly(p1);
         }
         h.endTransaction();

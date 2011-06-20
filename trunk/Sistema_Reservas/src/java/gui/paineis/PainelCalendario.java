@@ -18,6 +18,7 @@ import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import database.ReservaDAO;
 import gui.janelas.JanelaNovaReserva;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,7 +27,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 
 
 /**
@@ -59,6 +59,7 @@ public class PainelCalendario extends Panel{
     Button botaoNovaReserva;
     int diaS;
     String mesS;
+    ReservaDAO reservaDAO = new ReservaDAO();
 
 
 
@@ -320,8 +321,17 @@ public class PainelCalendario extends Panel{
             listaReservas.setCaption("Reservas para o dia " + diaS + " de " + mesS );
 
             System.out.println(""+pd.textoDia);
-            Reserva r = new Reserva();
-            listaReservas.addItem(r.getDadosReservaParaListSelect());
+
+            //passar a lista de reservas
+            //Reserva r = new Reserva();
+            //listaReservas.addItem(r.getDadosReservaParaListSelect());
+            ArrayList<Reserva> res = reservaDAO.pesquisar();
+            while (!res.isEmpty())
+            {
+                Reserva r = res.remove(0);
+                listaReservas.addItem(r);
+            }
+            
         }
 
     }

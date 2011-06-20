@@ -206,11 +206,13 @@ public class JanelaGerenciarSalas extends Window{
     
     public void limpaCampos()
     {
+        ligaCampos();        
         numSala.setValue("");
         localSala.setValue("");
         capSala.setValue("");
         tipoSala.setValue("");        
-        listaSalas.removeAllItems();
+        //listaSalas.removeAllItems();
+        listaSalas.setEnabled(false);
         bDeletar.setEnabled(false);
         //bNova.setEnabled(false);
         bEditar.setEnabled(false);
@@ -218,7 +220,9 @@ public class JanelaGerenciarSalas extends Window{
         delRec.setEnabled(true);
         nomeRec.setValue("");        
         quantRec.setValue("");        
-        descrRec.setValue("");        
+        descrRec.setValue("");  
+        listaRecursos.setEditable(true);
+        listaRecursos.removeAllItems();
     }
     
     public void adicionaSalasComboBox()
@@ -255,35 +259,39 @@ public class JanelaGerenciarSalas extends Window{
         public void buttonClick(ClickEvent event)
         {
             //pega a sala que esta selecionada no combobox e devolve
-            ligaCampos();
-            listaRecursos.setEditable(true);
-            listaSalas.setEnabled(false);
-            bNova.setEnabled(false);
-            bEditar.setCaption("Salvar Alterações");
-            bEditar.removeListener(this);
-            bEditar.addListener(new EventoSalvaSalaAlterada());
-            bEditar.setEnabled(true);
-            
-            Recinto r = (Recinto) listaSalas.getValue();
-            numSala.setValue(r.getNumero());
-            capSala.setValue(r.getCapacidade());
-            localSala.setValue(r.getLocalizacao());
-            tipoSala.setValue(r.getTipo());
-            
-            //RecursoDAO recDAO = new RecursoDAO();
-            ArrayList<Recurso> recs = recursoDAO.pesquisar();
-            //System.out.println(recs.toString());            
-            int i = 0;
-            while (!recs.isEmpty())
+            if (listaSalas.getValue() != null)
             {
-                Recurso temp = recs.remove(0);
-                System.out.println("dentro do while " + temp);
-                if (temp.getIdRecinto() == r.getIdRecinto())
+
+                ligaCampos();
+                listaRecursos.setEditable(true);
+                listaSalas.setEnabled(false);
+                bNova.setEnabled(false);
+                bEditar.setCaption("Salvar Alterações");
+                bEditar.removeListener(this);
+                bEditar.addListener(new EventoSalvaSalaAlterada());
+                bEditar.setEnabled(true);
+
+                Recinto r = (Recinto) listaSalas.getValue();
+                numSala.setValue(r.getNumero());
+                capSala.setValue(r.getCapacidade());
+                localSala.setValue(r.getLocalizacao());
+                tipoSala.setValue(r.getTipo());
+
+                //RecursoDAO recDAO = new RecursoDAO();
+                ArrayList<Recurso> recs = recursoDAO.pesquisar();
+                //System.out.println(recs.toString());            
+                int i = 0;
+                while (!recs.isEmpty())
                 {
-                    System.out.println("dentro do if " + temp);
-                    listaRecursos.addItem(new Object[]{temp.getNome(),temp.getQuantidade(),temp.getComentarios()}, ++i);
+                    Recurso temp = recs.remove(0);
+                    System.out.println("dentro do while " + temp);
+                    if (temp.getIdRecinto() == r.getIdRecinto())
+                    {
+                        System.out.println("dentro do if " + temp);
+                        listaRecursos.addItem(new Object[]{temp.getNome(),temp.getQuantidade(),temp.getComentarios()}, ++i);
+                    }
                 }
-            }
+           }
         }
     }
 
@@ -378,7 +386,9 @@ public class JanelaGerenciarSalas extends Window{
     private class EventoNovaSala implements Button.ClickListener
     {
         public void buttonClick(ClickEvent event)
-        {
+        {            
+            limpaCampos();            
+            if (listaRecursos.removeAllItems()) System.out.println("limpou"); else System.out.println("nao limpou");;
             bNova.setCaption("Salvar");
             bNova.removeListener(this);
             bNova.addListener(new EventoAddSala());
@@ -390,7 +400,7 @@ public class JanelaGerenciarSalas extends Window{
     {
         public void valueChange(ValueChangeEvent event) 
         {
-            if (!alterandoSala)
+            if (listaSalas.isEnabled())
             {
                 ligaCampos();
 
@@ -417,7 +427,7 @@ public class JanelaGerenciarSalas extends Window{
                 desligaCampos();              
                 listaRecursos.setEditable(false);
             }
-            else alterandoSala =   false;
+            //else alterandoSala =   false;
         }        
     }
 }

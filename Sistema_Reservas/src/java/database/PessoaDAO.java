@@ -60,15 +60,18 @@ public class PessoaDAO implements OperacoesDAO
     @Override
     public boolean editar(Object obj)
     {
+        Pessoa p = (Pessoa) obj;
+        int P = 0;
         h.beginTransaction();
         {
             //recinto q vem da interface jah editado
-            Pessoa p = (Pessoa) obj;
+            
             //Pessoa que vem do banco para ser editado
             Pessoa p1 = (Pessoa) h.getObject(Pessoa.class, p.getIdPessoa());
             //o valor de r(atualizado) vai no valor do banco
             p1 = p;
             //atualiza o r1 que recebe os valores de r(atualizado)
+            int i = 0;
             h.updateOnly(p1);
         }
         h.endTransaction();

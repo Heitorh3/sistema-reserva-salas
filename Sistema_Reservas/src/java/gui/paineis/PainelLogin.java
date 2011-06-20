@@ -48,6 +48,7 @@ public class PainelLogin extends Panel {
             ArrayList<Pessoa> pessoas = pessoaDAO.pesquisar();
             for (Pessoa p : pessoas)
             {
+                //System.out.println(p.toStringReal());
                 if ((p.getLogin().equals(usuario.getValue())) && (p.getSenha().equals(senha.getValue())))
                 {
                     System.out.println("logou");                    

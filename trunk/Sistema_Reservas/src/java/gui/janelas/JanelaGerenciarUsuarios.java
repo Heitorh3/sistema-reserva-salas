@@ -68,6 +68,7 @@ public class JanelaGerenciarUsuarios extends Window {
         senha2 = new PasswordField("Confirme a senha");
         admin = new CheckBox("Administrador? ");
         bloquear = new CheckBox("Bloqueado? ");
+        //bloquear.setEnabled(false);
         
         addUser = new Button("Adicionar Usuário");
         addUser.addListener(new EventoNovoUsuario());
@@ -90,8 +91,7 @@ public class JanelaGerenciarUsuarios extends Window {
         leiaute.addComponent(login);
         leiaute.addComponent(senha1);
         leiaute.addComponent(senha2);
-        leiaute.addComponent(admin);
-        bloquear.setVisible(false);
+        leiaute.addComponent(admin);        
         leiaute.addComponent(bloquear);        
         leiaute.addComponent(addUser);
         leiaute.addComponent(editar);
@@ -114,6 +114,7 @@ public class JanelaGerenciarUsuarios extends Window {
         senha2.setReadOnly(true);
         admin.setReadOnly(true);
         //users.setEnabled(true);
+        bloquear.setReadOnly(true);
         
     }
     private void ligaCampos()
@@ -128,6 +129,7 @@ public class JanelaGerenciarUsuarios extends Window {
         senha2.setReadOnly(false);
         admin.setReadOnly(false);
         //users.setEnabled(false);
+        bloquear.setReadOnly(false);
     }
     
     private void limpaCampos()
@@ -170,7 +172,8 @@ public class JanelaGerenciarUsuarios extends Window {
                 login.setValue(p.getLogin());
                 senha1.setValue(p.getSenha());
                 senha2.setValue(p.getSenha());
-                admin.setValue(p.isAdmin());            
+                admin.setValue(p.isAdmin());
+                bloquear.setValue(p.isBloqueado());
                 desligaCampos();
             }            
         }
@@ -199,6 +202,7 @@ public class JanelaGerenciarUsuarios extends Window {
             if (senha1.getValue().equals(senha2.getValue()))
             {
                 Pessoa p = new Pessoa();
+
                 p.setNomePessoa((String)nome.getValue());
                 p.setEmail((String)email.getValue());
                 p.setTelefone((String)telefone.getValue());
@@ -206,7 +210,8 @@ public class JanelaGerenciarUsuarios extends Window {
                 p.setLogin((String)login.getValue());
                 p.setSenha((String)senha1.getValue());
                 if (admin.getValue().equals(Boolean.TRUE))  p.setAdmin(true);  else p.setAdmin(false);
-                p.setBloqueado(false);
+                if (bloquear.getValue().equals(Boolean.TRUE))  p.setBloqueado(true);  else p.setBloqueado(false);
+                
                 pessoaDAO.inserir(p);
 
                 addUser.setCaption("Adicionar Usuário");
@@ -267,6 +272,7 @@ public class JanelaGerenciarUsuarios extends Window {
             users.removeAllItems();            
             preencheCB();
             users.setEnabled(true);
+            bloquear.setVisible(false);
         }
         
     }

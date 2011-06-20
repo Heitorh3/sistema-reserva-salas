@@ -29,7 +29,7 @@ public class PainelBotoes extends Panel{
     Button gerenciarUsuarios;
     HorizontalLayout leiaute;
     Window win;
-    PainelLogin pl;
+    private PainelLogin pl;
 
     public PainelBotoes(Window win)
     {
@@ -76,19 +76,18 @@ public class PainelBotoes extends Panel{
     //maneira de fazer eventos para os botoes
     private class EventoNovaSala implements Button.ClickListener
     {
-    @Override
+        @Override
         public void buttonClick(Button.ClickEvent event)
-        {
-            JanelaGerenciarSalas FNS = new JanelaGerenciarSalas();
-            win.addWindow(FNS);
-
+        {            
+                JanelaGerenciarSalas FNS = new JanelaGerenciarSalas();
+                win.addWindow(FNS);
         }
 
     }
     
     private class EventoGerUsers implements Button.ClickListener
     {
-    @Override
+        @Override
         public void buttonClick(Button.ClickEvent event)
         {
             JanelaGerenciarUsuarios JGU = new JanelaGerenciarUsuarios();

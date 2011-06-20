@@ -313,21 +313,18 @@ public class JanelaGerenciarSalas extends Window{
             //listaSalas.removeListener(new EventoMostraDados());
             
             Recinto r = (Recinto) listaSalas.getValue();
-            r.setNumero(numSala.getValue());    //erro de tipo
+            r.setNumero(Integer.parseInt(numSala.getValue().toString()));    //erro de tipo
             r.setLocalizacao((String)localSala.getValue());
-            r.setCapacidade(capSala.getValue());    //erro de tipo
+            r.setCapacidade(Integer.parseInt(capSala.getValue().toString()));    //erro de tipo
             r.setTipo((String)tipoSala.getValue());
-
-            for (Iterator i = listaRecursos.getItemIds().iterator();i.hasNext();)
+            
+            ArrayList<Recurso> recs = recursoDAO.pesquisar();
+            while (!recs.isEmpty())
             {
-                int iid = (Integer) i.next();
-                Item item = listaRecursos.getItem(iid);
-                Recurso rec = new Recurso();
-                rec.setNome((String)item.getItemProperty("Nome").getValue());
-                rec.setQuantidade((Integer)item.getItemProperty("Quantidade").getValue());
-                rec.setComentarios((String)item.getItemProperty("Descrição").getValue());
-                recursoDAO.excluir(rec);
+                
             }
+
+            
 
             for (Iterator i = listaRecursos.getItemIds().iterator();i.hasNext();)
             {

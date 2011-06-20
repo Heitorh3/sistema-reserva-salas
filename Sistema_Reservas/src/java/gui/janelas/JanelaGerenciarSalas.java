@@ -285,6 +285,7 @@ public class JanelaGerenciarSalas extends Window{
                 while (!recs.isEmpty())
                 {
                     Recurso temp = recs.remove(0);                    
+                    recursoDAO.excluir(temp);
                     if (temp.getIdRecinto() == r.getIdRecinto())
                     {                        
                         listaRecursos.addItem(new Object[]{temp.getNome(),temp.getQuantidade(),temp.getComentarios()}, ++i);
@@ -296,10 +297,9 @@ public class JanelaGerenciarSalas extends Window{
 
     private class EventoRemRecurso implements Button.ClickListener
     {
-        public void buttonClick(ClickEvent event) {
-            Item item = listaRecursos.getItem(listaRecursos.getValue());
-            listaRecursos.removeItem(item);
-            System.out.println(item.toString());
+        public void buttonClick(ClickEvent event) {            
+            if (listaRecursos.getValue() != null)
+                listaRecursos.removeItem(listaRecursos.getValue());
             
         }
     }
@@ -313,15 +313,19 @@ public class JanelaGerenciarSalas extends Window{
             //listaSalas.removeListener(new EventoMostraDados());
             
             Recinto r = (Recinto) listaSalas.getValue();
-            r.setNumero(Integer.parseInt((String)numSala.getValue()));
+            r.setNumero(numSala.getValue());    //erro de tipo
             r.setLocalizacao((String)localSala.getValue());
-            r.setCapacidade(Integer.parseInt((String)capSala.getValue()));
+            r.setCapacidade(capSala.getValue());    //erro de tipo
             r.setTipo((String)tipoSala.getValue());
 
-            ArrayList<Recurso> recs = recursoDAO.pesquisar();
-            while (!recs.isEmpty())
+            for (Iterator i = listaRecursos.getItemIds().iterator();i.hasNext();)
             {
-                Recurso rec = (Recurso) recs.remove(0);
+                int iid = (Integer) i.next();
+                Item item = listaRecursos.getItem(iid);
+                Recurso rec = new Recurso();
+                rec.setNome((String)item.getItemProperty("Nome").getValue());
+                rec.setQuantidade((Integer)item.getItemProperty("Quantidade").getValue());
+                rec.setComentarios((String)item.getItemProperty("Descrição").getValue());
                 recursoDAO.excluir(rec);
             }
 

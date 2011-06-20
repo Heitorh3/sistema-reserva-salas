@@ -16,6 +16,10 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import database.RecintoDAO;
+import entidades.Recinto;
+import entidades.Reserva;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,7 +32,7 @@ public class JanelaNovaReserva extends Window{
     Panel labelResponsavel;
     TextField nomeReserva;
     TextField solicitante;
-    TextField NSresponsavel;
+    TextField responsavel;
     TextField tfDia;
     TextField tfMes;
     TextField aAno;
@@ -38,8 +42,17 @@ public class JanelaNovaReserva extends Window{
     OptionGroup repeticao;
     Button salvar;
     Button cancelar;
-    ComboBox listaSalas;
+    ComboBox listaSalas;    
+    NativeSelect horaInicio;
+    NativeSelect minInicio;
+    NativeSelect horaFim;
+    NativeSelect minFim;
+    NativeSelect diaIni;
+    NativeSelect mesIni;
+    NativeSelect diaFim;
+    NativeSelect mesFim;
 
+    RecintoDAO recintoDAO = new RecintoDAO();
     /*
      * A fábrica não tem trabalho megafoda, a gente que torna o trabalho
      * megafoda pra valorizar.
@@ -77,7 +90,7 @@ public class JanelaNovaReserva extends Window{
             //neste setValue vai o nome do solicitante logado no sistema
             solicitante.setValue("Manolo");
             solicitante.setReadOnly(true);
-            NSresponsavel = new TextField("Responsável");
+            responsavel = new TextField("Responsável");
             
             repeticao = new OptionGroup("Repetição");
             repeticao.addItem("Diariamente");
@@ -87,25 +100,25 @@ public class JanelaNovaReserva extends Window{
             //repeticao.setNullSelectionAllowed(false);
             repeticao.setValue("Diariamente");
             
-            NativeSelect horaInicio = new NativeSelect();
-            NativeSelect minInicio = new NativeSelect();
-            NativeSelect horaFim = new NativeSelect();
-            NativeSelect minFim = new NativeSelect();
-            NativeSelect diaIni = new NativeSelect();
-            NativeSelect mesIni = new NativeSelect();
-            NativeSelect diaFim = new NativeSelect();
-            NativeSelect mesFim = new NativeSelect();
+            horaInicio = new NativeSelect();
+            minInicio = new NativeSelect();
+            horaFim = new NativeSelect();
+            minFim = new NativeSelect();
+            diaIni = new NativeSelect();
+            mesIni = new NativeSelect();
+            diaFim = new NativeSelect();
+            mesFim = new NativeSelect();
             
             String[] meses = {
             "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
             "Agosto", "Setembro", "Outubro","Novembro", "Dezembro",
             };
-            for (int i = 0; i < 32;i++)
+            for (int i = 1; i < 32;i++)
             {
                 diaIni.addItem(i);
                 diaFim.addItem(i);
             }
-            for (int i = 0; i < meses.length;i++)
+            for (int i = 1; i < meses.length;i++)
             {
                 mesIni.addItem(meses[i]);
                 mesFim.addItem(meses[i]);
@@ -135,6 +148,7 @@ public class JanelaNovaReserva extends Window{
 
             listaSalas = new ComboBox("Sala a reservar");
             listaSalas.setNullSelectionAllowed(false);
+            preencheSalas();
             finalidade = new TextField("Finalidade");
             //TextField tipo = new TextField("Tipo");
             salvar = new Button("Salvar");
@@ -154,7 +168,7 @@ public class JanelaNovaReserva extends Window{
             mainLayout.addComponent(nomeReserva);
             mainLayout.addComponent(finalidade);
             mainLayout.addComponent(solicitante);
-            mainLayout.addComponent(NSresponsavel);
+            mainLayout.addComponent(responsavel);
             leiauteDia.addComponent(di);
             leiauteDia.addComponent(diaIni);
             leiauteDia.addComponent(mesIni);
@@ -178,12 +192,32 @@ public class JanelaNovaReserva extends Window{
 
     }
 
+    public void preencheSalas()
+    {
+        ArrayList<Recinto> recs = recintoDAO.pesquisar();
+        while (!recs.isEmpty())
+        {
+            listaSalas.addItem(recs.remove(0));
+        }
+    }
+
+
+
     private class EventoAdicionarReserva implements Button.ClickListener
     {
         @Override
         public void buttonClick(ClickEvent event)
         {
-            throw new UnsupportedOperationException("Not supported yet.");
+            Reserva re = new Reserva();
+            re.setNomeEvento((String) nomeReserva.getValue());
+            re.setFinalidade((String)finalidade.getValue());
+            re.setResponsavel((String)responsavel.getValue());
+            Object dia = diaIni.getValue();
+            Object mes = mesIni.getValue();
+            String data = dia.toString() + "/" + mes.toString() + "/2011";
+            re.setDataInicioEvento(data);
+            System.out.println(re.toString() + "  " + data);
+
         }
     }
 

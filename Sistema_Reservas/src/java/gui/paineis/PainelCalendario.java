@@ -310,7 +310,7 @@ public class PainelCalendario extends Panel{
 
     private class EventoPassaReservas implements ClickListener
     {
-
+        @Override
         public void click(ClickEvent event)
         {            
             PainelDia pd = (PainelDia) event.getComponent();            

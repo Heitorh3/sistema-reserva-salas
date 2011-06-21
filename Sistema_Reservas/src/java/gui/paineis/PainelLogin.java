@@ -23,7 +23,7 @@ public class PainelLogin extends Panel {
     TextField senha;
     Button logar;
     PessoaDAO pessoaDAO = new PessoaDAO();
-    Pessoa pessoaLogada;
+    public static Pessoa pessoaLogada;
 
     public PainelLogin() {
         usuario = new TextField("Usuário");

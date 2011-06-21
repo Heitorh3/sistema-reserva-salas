@@ -17,16 +17,21 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import database.RecintoDAO;
+import database.ReservaDAO;
+import entidades.Pessoa;
 import entidades.Recinto;
 import entidades.Reserva;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
  * @author 0213101
  */
 public class JanelaNovaReserva extends Window{
-    
+
+        
     Label titulo;
     Panel sala;
     Panel labelResponsavel;
@@ -51,20 +56,24 @@ public class JanelaNovaReserva extends Window{
     NativeSelect mesIni;
     NativeSelect diaFim;
     NativeSelect mesFim;
-
+    
+    HashMap mapaMeses;
+    HashMap mapaRepetz;
+    
     RecintoDAO recintoDAO = new RecintoDAO();
+    ReservaDAO reservaDAO = new ReservaDAO();
     /*
      * A fábrica não tem trabalho megafoda, a gente que torna o trabalho
      * megafoda pra valorizar.
      * - Cabeceia
      */
     public JanelaNovaReserva(int dia, String mes)
-    {
-        
+    {            
             this.setModal(true);
             this.setWidth("50%");
             this.setHeight("80%");
             this.center();
+            //System.out.println(getParent().toString());
 
             VerticalLayout mainLayout = new VerticalLayout();
             HorizontalLayout leiauteDia = new HorizontalLayout();
@@ -72,7 +81,27 @@ public class JanelaNovaReserva extends Window{
             HorizontalLayout leiauteIni = new HorizontalLayout();
             leiauteIni.setSpacing(true);
             HorizontalLayout leiauteFim = new HorizontalLayout();
-            leiauteFim.setSpacing(true);            
+            leiauteFim.setSpacing(true);        
+            
+            mapaMeses = new HashMap();
+            mapaMeses.put("Janeiro",new Integer(1));
+            mapaMeses.put("Fevereiro",new Integer(2));
+            mapaMeses.put("Março",new Integer(3));
+            mapaMeses.put("Abril",new Integer(4));
+            mapaMeses.put("Maio",new Integer(5));
+            mapaMeses.put("Junho",new Integer(6));
+            mapaMeses.put("Julho",new Integer(7));
+            mapaMeses.put("Agosto",new Integer(8));
+            mapaMeses.put("Setembro",new Integer(9));
+            mapaMeses.put("Outubro",new Integer(10));
+            mapaMeses.put("Novembro",new Integer(11));
+            mapaMeses.put("Dezembro",new Integer(12));
+            
+            mapaRepetz = new HashMap();
+            mapaRepetz.put("Diariamente",'d');
+            mapaRepetz.put("Semanalmente",'s');
+            mapaRepetz.put("Quinzenalmente",'q');
+            mapaRepetz.put("Mensalmente",'m');
 
             titulo = new Label();
             titulo.setContentMode(Label.CONTENT_XHTML);
@@ -212,12 +241,59 @@ public class JanelaNovaReserva extends Window{
             re.setNomeEvento((String) nomeReserva.getValue());
             re.setFinalidade((String)finalidade.getValue());
             re.setResponsavel((String)responsavel.getValue());
-            Object dia = diaIni.getValue();
-            Object mes = mesIni.getValue();
-            String data = dia.toString() + "/" + mes.toString() + "/2011";
-            re.setDataInicioEvento(data);
-            System.out.println(re.toString() + "  " + data);
-
+            int diai = (int) diaIni.getValue();
+            
+            String mess = (String) mesIni.getValue();
+            int mesi = (int) mapaMeses.get(mess); 
+            
+            
+            String datai = Integer.toString(diai) + "/" + Integer.toString(mesi) + "/2011";
+            re.setDataInicioEvento(datai);
+            int diaf = (int) diaFim.getValue();
+            mess = (String) mesFim.getValue();
+            int mesf = (int) mapaMeses.get(mess);            
+            
+            
+            String dataf = Integer.toString(diaf) + "/" + Integer.toString(mesf) + "/2011";
+            re.setDataFimEvento(dataf);
+            int horai = (int) horaInicio.getValue();
+            int mini = (int) minInicio.getValue();
+            String horari = Integer.toString(horai) + "/" + Integer.toString(mini);
+            re.setHorarioInicioEvento(horari);
+            int horaf = (int) horaFim.getValue();
+            int minf = (int) minFim.getValue();
+            String horarf = Integer.toString(horaf) + "/" + Integer.toString(minf);
+            re.setHorarioFimEvento(horarf);
+            re.setSala((Recinto)listaSalas.getValue());
+            re.setSolicitante(new Pessoa());
+            
+            char repz = (char) mapaRepetz.get(repeticao.getValue());
+            re.setRepeticao(repz);
+            reservaDAO.inserir(re);
+            
+            switch (repz)
+            {
+                case 'd':
+                {
+                    //se diario, incrementa 1 no dia verifica se tah na faixa de dias do mes (mapa), se passar mes++ se nao mesmo mes
+                    //cria clone do re e acerta nova data inicial e adicina no banco
+                    //mesmo para as outras, soh muda o incremento, soh kero v pra editar as reservas
+                    break;
+                }
+                case 's':
+                {
+                    break;
+                }    
+                case 'q':
+                {
+                    break;
+                }
+                case 'm':
+                {
+                    break;
+                }
+            }
+            
         }
     }
 

@@ -289,6 +289,10 @@ public class Reserva implements Serializable
 
     @Override
     public String toString() {
+        return "Sala " + this.getSala().getNumero() + "   " + "por " + this.getResponsavel();
+    }
+
+    public String toStringReal() {
         return "EventoReserva{" + "nomeEvento=" + nomeReserva + "dataInicioEvento=" + dataInicioEvento + "dataFimEvento=" + dataFimEvento + "horarioInicioEvento=" + horarioInicioEvento + "horarioFimEvento=" + horarioFimEvento + "finalidade=" + finalidade + "responsavel=" + responsavel + "solicitante=" + solicitante + "sala=" + sala + "repeticao=" + repeticao + '}';
     }
 

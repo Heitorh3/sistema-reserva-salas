@@ -23,6 +23,11 @@ public class Hibernate { //oi
 
     private final SessionFactory sf = ac.configure().buildSessionFactory();
 
+    public Session getSession() {
+        return session;
+    }
+
+
     /*
      * Abre a sessão do Hibernate para fazer as transações.
      */

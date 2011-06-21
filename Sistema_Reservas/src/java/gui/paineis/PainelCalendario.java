@@ -313,10 +313,12 @@ public class PainelCalendario extends Panel{
         @Override
         public void click(ClickEvent event)
         {            
-            PainelDia pd = (PainelDia) event.getComponent();            
+            listaReservas.removeAllItems();
+
+            PainelDia pd = (PainelDia) event.getComponent();
 
             diaS = Integer.parseInt((String)pd.textoDia.getValue());           
-            mesS = (String) caixaMeses.getValue();
+            //mesS = (String) caixaMeses.getValue();  //ERRAAAAAAAAADO.
 
             listaReservas.setCaption("Reservas para o dia " + diaS + " de " + mesS );
 
@@ -325,11 +327,34 @@ public class PainelCalendario extends Panel{
             //passar a lista de reservas
             //Reserva r = new Reserva();
             //listaReservas.addItem(r.getDadosReservaParaListSelect());
-            ArrayList<Reserva> res = reservaDAO.pesquisar();
+            
+             ArrayList<Reserva> res = reservaDAO.pesquisar();
             while (!res.isEmpty())
             {
                 Reserva r = res.remove(0);
-                listaReservas.addItem(r);
+                String[] day = r.getDataInicioEvento().split("/");
+                //String[] mo  = r.getDataInicioEvento().split("/");
+                int dia = Integer.parseInt(day[0]);
+                int mes = Integer.parseInt(day[1]);
+
+                Iterator valueIterator = tabelaMeses.values().iterator();
+                int mees = 0;
+                while (valueIterator.hasNext())
+                {
+                    String mesSelecionado = (String) valueIterator.next();
+                    //System.out.println(teste);
+                    if (mesSelecionado == caixaMeses.getValue())
+                    {
+                        //System.out.println(i);
+                        break;
+                    }
+                    else mees++;
+                }
+                mees++;
+                if ((dia == diaS) && (mes == mees))
+                    listaReservas.addItem(r);
+
+                //System.out.println("oi");
             }
             
         }
@@ -368,6 +393,7 @@ public class PainelCalendario extends Panel{
         @Override
         public void buttonClick(Button.ClickEvent event)
         {
+            mesS =(String) caixaMeses.getValue();
             listaReservas.removeAllItems();
             listaReservas.setCaption("Lista de Reservas");
             int colunaDestino = 0;

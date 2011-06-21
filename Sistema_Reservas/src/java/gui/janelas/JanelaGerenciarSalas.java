@@ -285,10 +285,11 @@ public class JanelaGerenciarSalas extends Window{
                 while (!recs.isEmpty())
                 {
                     Recurso temp = recs.remove(0);                    
-                    recursoDAO.excluir(temp);
+                        
                     if (temp.getIdRecinto() == r.getIdRecinto())
-                    {                        
+                    {  
                         listaRecursos.addItem(new Object[]{temp.getNome(),temp.getQuantidade(),temp.getComentarios()}, ++i);
+                        recursoDAO.excluir(temp);
                     }
                 }
            }
@@ -318,11 +319,15 @@ public class JanelaGerenciarSalas extends Window{
             r.setCapacidade(Integer.parseInt(capSala.getValue().toString()));    //erro de tipo
             r.setTipo((String)tipoSala.getValue());
             
-            ArrayList<Recurso> recs = recursoDAO.pesquisar();
-            while (!recs.isEmpty())
-            {
-                
-            }
+//            ArrayList<Recurso> recs = recursoDAO.pesquisar();
+//            while (!recs.isEmpty())
+//            {
+//                Recurso re = recs.remove(0);
+//                if (re.getIdRecinto() == r.getIdRecinto())
+//                {
+//                    recursoDAO.excluir(re);
+//                }
+//            }
 
             
 
@@ -338,12 +343,15 @@ public class JanelaGerenciarSalas extends Window{
                 recursoDAO.inserir(rec);
             }
             
+            recintoDAO.inserir(r);
+            
 
             bEditar.setCaption("Editar");
             bEditar.removeListener(this);
             bEditar.addListener(new EventoEditarSala());
             limpaCampos();
             desligaCampos();
+            listaSalas.setEnabled(false);
             listaSalas.removeAllItems();
             adicionaSalasComboBox();
             listaSalas.addListener(new EventoMostraDados());
@@ -402,7 +410,7 @@ public class JanelaGerenciarSalas extends Window{
             listaSalas.removeAllItems();
             listaRecursos.removeAllItems();
             adicionaSalasComboBox();
-
+            listaSalas.setEnabled(true);
         }
     }
 

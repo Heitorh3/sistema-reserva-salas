@@ -391,7 +391,7 @@ public class JanelaGerenciarSalas extends Window{
                 int iid = (Integer) i.next();
                 Item item = listaRecursos.getItem(iid);                
                 Recurso rec = new Recurso();
-                Recurso temp = new Recurso();
+                //Recurso temp = new Recurso();
                 rec.setNome((String)item.getItemProperty("Nome").getValue());
                 rec.setQuantidade((Integer)item.getItemProperty("Quantidade").getValue());
                 rec.setComentarios((String)item.getItemProperty("Descrição").getValue());

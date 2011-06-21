@@ -16,14 +16,15 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import database.PessoaDAO;
 import database.RecintoDAO;
 import database.ReservaDAO;
+import entidades.Hibernate;
 import entidades.Pessoa;
 import entidades.Recinto;
 import entidades.Reserva;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  *
@@ -62,6 +63,7 @@ public class JanelaNovaReserva extends Window{
     
     RecintoDAO recintoDAO = new RecintoDAO();
     ReservaDAO reservaDAO = new ReservaDAO();
+    PessoaDAO pessoaDAO = new PessoaDAO();
     /*
      * A fábrica não tem trabalho megafoda, a gente que torna o trabalho
      * megafoda pra valorizar.
@@ -237,40 +239,50 @@ public class JanelaNovaReserva extends Window{
         @Override
         public void buttonClick(ClickEvent event)
         {
+            //Hibernate h = new Hibernate();
+            //h.beginTransaction();
+
             Reserva re = new Reserva();
             re.setNomeEvento((String) nomeReserva.getValue());
             re.setFinalidade((String)finalidade.getValue());
             re.setResponsavel((String)responsavel.getValue());
-            int diai = (int) diaIni.getValue();
+            int diai = ((Integer) diaIni.getValue()).intValue();
             
             String mess = (String) mesIni.getValue();
-            int mesi = (int) mapaMeses.get(mess); 
+            int mesi = ((Integer) mapaMeses.get(mess)).intValue();
             
             
             String datai = Integer.toString(diai) + "/" + Integer.toString(mesi) + "/2011";
             re.setDataInicioEvento(datai);
-            int diaf = (int) diaFim.getValue();
+            int diaf = ((Integer) diaFim.getValue()).intValue();
             mess = (String) mesFim.getValue();
-            int mesf = (int) mapaMeses.get(mess);            
+            int mesf = ((Integer) mapaMeses.get(mess)).intValue();
             
             
             String dataf = Integer.toString(diaf) + "/" + Integer.toString(mesf) + "/2011";
             re.setDataFimEvento(dataf);
-            int horai = (int) horaInicio.getValue();
-            int mini = (int) minInicio.getValue();
-            String horari = Integer.toString(horai) + "/" + Integer.toString(mini);
+            int horai = Integer.parseInt((String)horaInicio.getValue());
+            int mini = Integer.parseInt((String)minInicio.getValue());
+            String horari = Integer.toString(horai) + ":" + Integer.toString(mini);
             re.setHorarioInicioEvento(horari);
-            int horaf = (int) horaFim.getValue();
-            int minf = (int) minFim.getValue();
-            String horarf = Integer.toString(horaf) + "/" + Integer.toString(minf);
+            int horaf = Integer.parseInt((String)horaFim.getValue());
+            int minf = Integer.parseInt((String)minFim.getValue());
+            String horarf = Integer.toString(horaf) + ":" + Integer.toString(minf);
             re.setHorarioFimEvento(horarf);
             re.setSala((Recinto)listaSalas.getValue());
-            re.setSolicitante(new Pessoa());
+
+            ArrayList<Pessoa> p = pessoaDAO.pesquisar();
+            //Pessoa pe = (Pessoa) h.getSession().load(Pessoa.class, 1);
+            Pessoa pe = p.remove(0);
+
             
-            char repz = (char) mapaRepetz.get(repeticao.getValue());
+            re.setSolicitante(pe);
+            
+            char repz = ((Character)mapaRepetz.get(repeticao.getValue())).charValue();
             re.setRepeticao(repz);
+            System.out.println(re.toString());
             reservaDAO.inserir(re);
-            
+            //h.endTransaction();
             switch (repz)
             {
                 case 'd':

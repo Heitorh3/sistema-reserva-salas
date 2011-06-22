@@ -19,6 +19,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import database.ReservaDAO;
+import gui.janelas.JanelaExcluirReserva;
 import gui.janelas.JanelaNovaReserva;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -398,10 +399,12 @@ public class PainelCalendario extends Panel{
         public void buttonClick(Button.ClickEvent event)
         {
             Reserva valor = (Reserva) listaReservas.getValue();
-            if (valor != null)
-                System.out.println(valor.toString());
+            if (valor != null){
+                JanelaNovaReserva jnr = new JanelaNovaReserva(diaS,mesS,true);
+                getWindow().addWindow(jnr);
         }
 
+    }
     }
 
     private class EventoTrocaMes implements Button.ClickListener
@@ -555,6 +558,21 @@ public class PainelCalendario extends Panel{
         public void buttonClick(Button.ClickEvent event) {
             if (listaReservas.getValue() != null)
             {
+                JanelaExcluirReserva jer = new JanelaExcluirReserva((Reserva)listaReservas.getValue());
+                jer.deletar.addListener(new EventoConfirmaExclusao());
+                getWindow().addWindow(jer);
+                //botaoExcluir.removeListener(this);
+                //botaoExcluir.addListener(new EventoConfirmaExclusao());
+            }
+        }
+    }
+    
+    private class EventoConfirmaExclusao implements Button.ClickListener{
+
+        @Override
+        public void buttonClick(Button.ClickEvent event) {
+            if (listaReservas.getValue() != null)
+            {
                 Reserva temp = (Reserva) listaReservas.getValue();
                 listaReservas.removeAllItems();
                 reservaDAO.excluir(temp);
@@ -564,6 +582,8 @@ public class PainelCalendario extends Panel{
 
             }
         }
-
+        
     }
+    
+    
 }

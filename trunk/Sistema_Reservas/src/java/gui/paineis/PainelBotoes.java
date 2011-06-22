@@ -28,13 +28,11 @@ public class PainelBotoes extends Panel{
     Button botaoPesquisar;
     Button gerenciarUsuarios;
     HorizontalLayout leiaute;
-    Window win;
     private PainelLogin pl;
 
-    public PainelBotoes(Window win)
+    public PainelBotoes()
     {
         pl = new PainelLogin();
-        this.win = win;
         lInicio = new Label("<b>Sistema de Reserva de Salas 2011</b>",Label.CONTENT_XHTML);
         botaoLogin = new Button();
         botaoLogin.setCaption("Entrar no sistema");
@@ -80,7 +78,7 @@ public class PainelBotoes extends Panel{
         public void buttonClick(Button.ClickEvent event)
         {            
                 JanelaGerenciarSalas FNS = new JanelaGerenciarSalas();
-                win.addWindow(FNS);
+                getWindow().addWindow(FNS);
         }
 
     }
@@ -91,7 +89,7 @@ public class PainelBotoes extends Panel{
         public void buttonClick(Button.ClickEvent event)
         {
             JanelaGerenciarUsuarios JGU = new JanelaGerenciarUsuarios();
-            win.addWindow(JGU);
+            getWindow().addWindow(JGU);
 
         }
 
@@ -103,7 +101,7 @@ public class PainelBotoes extends Panel{
         public void buttonClick(Button.ClickEvent event)
         {
             JanelaPesquisas jp = new JanelaPesquisas();
-            win.addWindow(jp);
+            getWindow().addWindow(jp);
 
         }
 

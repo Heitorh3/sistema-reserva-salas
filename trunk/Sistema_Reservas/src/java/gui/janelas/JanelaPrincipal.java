@@ -24,28 +24,7 @@ public class JanelaPrincipal extends Application {
     private Window mainWindow;
 
     @Override
-    public void init() {
-	
-        /* INICIALIZACAO DO PRIMEIRO MES QUE APARECERA NA TELA
-         * PODERIA COMECAR POR JANEIRO, MAS EH MAIS PRATICO COMECAR
-         * MOSTRANDO O MES Q ESTAMOS.
-         */
-        ArrayList<Reserva> reservas = new ArrayList();  //AQUI VAI TODOS OS EVENTOS Q VIRAO DO BD
-
-
-        
-        //Calendar calendAtual = new GregorianCalendar();
-        //calendAtual.setTime(data);
-        //int mesAtual = calendAtual.get(Calendar.MONTH) + 1; //pois comeca do 0, janeiro -> 0
-        
-        //System.out.println("Mes atual = " + mesAtual);
-
-        //este vetor será o calendário que contera os dias
-        //PainelCalendario calendario = new PainelCalendario(reservas,Calendar.MONTH);
-        //calendario.setData(data);
-
-
-        /* INICIO DA INTERFACE */        
+    public void init() {        
 
         mainWindow = new Window("Sistema de Reserva de Salas");
         
@@ -53,8 +32,8 @@ public class JanelaPrincipal extends Application {
         VerticalLayout mainLayout1 = new VerticalLayout();
         HorizontalLayout mainLayout2 = new HorizontalLayout();
 
-        PainelBotoes pb = new PainelBotoes(mainWindow);
-        PainelCalendario pc = new PainelCalendario(reservas,mainWindow);
+        PainelBotoes pb = new PainelBotoes();
+        PainelCalendario pc = new PainelCalendario();
 
 
         mainLayout1.addComponent(pb);

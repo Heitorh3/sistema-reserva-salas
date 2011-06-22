@@ -10,6 +10,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import database.PessoaDAO;
 import entidades.Pessoa;
+import entidades.Singleton;
 import java.util.ArrayList;
 
 
@@ -52,13 +53,11 @@ public class PainelLogin extends Panel {
                 if ((p.getLogin().equals(usuario.getValue())) && (p.getSenha().equals(senha.getValue())))
                 {
                     getWindow().showNotification("Logado.");
-                    pessoaLogada = p;
+                    Singleton logado = Singleton.getInstance();
+                    logado.setPessoa(p);
                 }
                 else getWindow().showNotification("Falha no Login.");
             }
-            
-            
-            
             
             setVisible(false);
         }

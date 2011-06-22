@@ -60,6 +60,7 @@ public class PainelCalendario extends Panel{
     int diaS;
     String mesS;
     ReservaDAO reservaDAO = new ReservaDAO();
+    PainelDia diaSel;
 
 
 
@@ -74,6 +75,7 @@ public class PainelCalendario extends Panel{
         botaoEditar = new Button("Editar Reserva");
         botaoEditar.addListener(new EventoEditarReserva());
         botaoExcluir = new Button("Excluir Reserva");
+        botaoExcluir.addListener(new EventoDeletarReserva());
         botaoNovaReserva = new Button("Nova Reserva");
         botaoNovaReserva.addListener(new EventoNovaReserva());
 
@@ -209,7 +211,7 @@ public class PainelCalendario extends Panel{
 
 
         
-        botaoMudarMes = new Button("Trocar Mes");
+        botaoMudarMes = new Button("Trocar Mes / Atualizar Calendário");
         botaoMudarMes.addListener(new EventoTrocaMes());
         caixaMeses.setNullSelectionAllowed(false); //nao funça????
         caixaMeses.setValue(new Integer(3));
@@ -250,9 +252,44 @@ public class PainelCalendario extends Panel{
 
         for (int i = 0; i < diasMes; i++)
         {
-            PainelDia pd = new PainelDia(new ArrayList(),i+1);
+            ArrayList<Reserva> resParaPassar = new ArrayList();
+
+            ArrayList<Reserva> res = reservaDAO.pesquisar();
+            while (!res.isEmpty())
+            {
+                Reserva r = res.remove(0);
+                String[] day = r.getDataInicioEvento().split("/");
+                //String[] mo  = r.getDataInicioEvento().split("/");
+                int diaa = Integer.parseInt(day[0]);
+                int mes = Integer.parseInt(day[1]);
+
+                int diaD = i + 1;
+
+                Iterator valueIterator = tabelaMeses.values().iterator();
+                int mees = 0;
+                while (valueIterator.hasNext())
+                {
+                    String mesSelecionado = (String) valueIterator.next();
+                    //System.out.println(teste);
+                    if (mesSelecionado == caixaMeses.getValue())
+                    {
+                        //System.out.println(i);
+                        break;
+                    }
+                    else mees++;
+                }
+                mees++;
+                if ((diaa == diaD) && (mes == mees))
+                    resParaPassar.add(r);
+                int pp = 0;
+            }
+
+
+            PainelDia pd = new PainelDia(resParaPassar,i+1);
             pd.listener = new EventoPassaReservas();
             pd.addListener(pd.listener);
+
+
             diasLeiaute.addComponent(pd,colunaDestino,linhaDestino);
             if (colunaDestino < 6)
                 colunaDestino++;
@@ -316,6 +353,7 @@ public class PainelCalendario extends Panel{
             listaReservas.removeAllItems();
 
             PainelDia pd = (PainelDia) event.getComponent();
+            diaSel = pd;
 
             diaS = Integer.parseInt((String)pd.textoDia.getValue());           
             //mesS = (String) caixaMeses.getValue();  //ERRAAAAAAAAADO.
@@ -324,40 +362,19 @@ public class PainelCalendario extends Panel{
 
             System.out.println(""+pd.textoDia);
 
-            //passar a lista de reservas
-            //Reserva r = new Reserva();
-            //listaReservas.addItem(r.getDadosReservaParaListSelect());
-            
-             ArrayList<Reserva> res = reservaDAO.pesquisar();
-            while (!res.isEmpty())
+            int tam = 0;
+            while (tam < pd.getReservasDesteDia().size())
             {
-                Reserva r = res.remove(0);
-                String[] day = r.getDataInicioEvento().split("/");
-                //String[] mo  = r.getDataInicioEvento().split("/");
-                int dia = Integer.parseInt(day[0]);
-                int mes = Integer.parseInt(day[1]);
-
-                Iterator valueIterator = tabelaMeses.values().iterator();
-                int mees = 0;
-                while (valueIterator.hasNext())
-                {
-                    String mesSelecionado = (String) valueIterator.next();
-                    //System.out.println(teste);
-                    if (mesSelecionado == caixaMeses.getValue())
-                    {
-                        //System.out.println(i);
-                        break;
-                    }
-                    else mees++;
-                }
-                mees++;
-                if ((dia == diaS) && (mes == mees))
-                    listaReservas.addItem(r);
+                listaReservas.addItem(pd.getReservasDesteDia().get(tam));
+                tam++;
+            }
+            
+             
 
                 //System.out.println("oi");
             }
             
-        }
+        
 
     }
 
@@ -482,7 +499,40 @@ public class PainelCalendario extends Panel{
 
             for (int i = 0; i < diasMes; i++)
             {
-                PainelDia pd = new PainelDia(new ArrayList(),i+1);
+                ArrayList<Reserva> resParaPassar = new ArrayList();
+
+            ArrayList<Reserva> res = reservaDAO.pesquisar();
+            while (!res.isEmpty())
+            {
+                Reserva r = res.remove(0);
+                String[] day = r.getDataInicioEvento().split("/");
+                //String[] mo  = r.getDataInicioEvento().split("/");
+                int diaa = Integer.parseInt(day[0]);
+                int mes = Integer.parseInt(day[1]);
+
+                int diaD = i + 1;
+
+                valueIterator = tabelaMeses.values().iterator();
+                int mees = 0;
+                while (valueIterator.hasNext())
+                {
+                    String mesSelecionado = (String) valueIterator.next();
+                    //System.out.println(teste);
+                    if (mesSelecionado == caixaMeses.getValue())
+                    {
+                        //System.out.println(i);
+                        break;
+                    }
+                    else mees++;
+                }
+                mees++;
+                if ((diaa == diaD) && (mes == mees))
+                    resParaPassar.add(r);
+                int pp = 0;
+            }
+
+
+            PainelDia pd = new PainelDia(resParaPassar,i+1);
                 pd.listener = new EventoPassaReservas();
                 pd.addListener(pd.listener);
                 diasLeiaute.addComponent(pd,colunaDestino,linhaDestino);
@@ -497,5 +547,23 @@ public class PainelCalendario extends Panel{
             }
            
         }
+    }
+
+    private class EventoDeletarReserva implements Button.ClickListener
+    {
+
+        public void buttonClick(Button.ClickEvent event) {
+            if (listaReservas.getValue() != null)
+            {
+                Reserva temp = (Reserva) listaReservas.getValue();
+                listaReservas.removeAllItems();
+                reservaDAO.excluir(temp);
+                if (diaSel.getReservasDesteDia().contains(temp))
+                    diaSel.getReservasDesteDia().remove(temp);
+                diaSel.getTextoRes().setCaption(diaSel.getReservasDesteDia().size() + " reservas.");
+
+            }
+        }
+
     }
 }

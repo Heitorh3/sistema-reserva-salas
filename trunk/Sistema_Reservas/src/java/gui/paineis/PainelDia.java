@@ -39,11 +39,14 @@ public class PainelDia extends Panel{
         leiaute = new VerticalLayout();
 
         this.dia = dia;
-        
+
+        reservasDesteDia = new ArrayList();
         this.reservasDesteDia = reservasDia;
 
+
         textoDia = new Label(Integer.toString(dia));
-        textoRes = new Label(Integer.toString(reservasDia.size())+" reservas");
+        textoRes = new Label();
+        textoRes.setCaption(Integer.toString(reservasDesteDia.size()) + " reservas");
         leiaute.addComponent(textoDia);
         //leiaute.setComponentAlignment(textoDia, Alignment.TOP_LEFT);
         leiaute.addComponent(textoRes);
@@ -51,6 +54,75 @@ public class PainelDia extends Panel{
         mainLeiaute.addComponent(leiaute);
         mainLeiaute.setComponentAlignment(leiaute, Alignment.TOP_LEFT);
         this.addComponent(mainLeiaute);
+
         
     }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    public VerticalLayout getLeiaute() {
+        return leiaute;
+    }
+
+    public void setLeiaute(VerticalLayout leiaute) {
+        this.leiaute = leiaute;
+    }
+
+    public ClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(ClickListener listener) {
+        this.listener = listener;
+    }
+
+    public VerticalLayout getMainLeiaute() {
+        return mainLeiaute;
+    }
+
+    public void setMainLeiaute(VerticalLayout mainLeiaute) {
+        this.mainLeiaute = mainLeiaute;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public ArrayList<Reserva> getReservasDesteDia() {
+        return reservasDesteDia;
+    }
+
+    public void setReservasDesteDia(ArrayList<Reserva> reservasDesteDia) {
+        this.reservasDesteDia = reservasDesteDia;
+    }
+
+    public Label getTextoDia() {
+        return textoDia;
+    }
+
+    public void setTextoDia(Label textoDia) {
+        this.textoDia = textoDia;
+    }
+
+    public Label getTextoRes() {
+        return textoRes;
+    }
+
+    public void setTextoRes(Label textoRes) {
+        this.textoRes = textoRes;
+    }
+
+
 }
+
+

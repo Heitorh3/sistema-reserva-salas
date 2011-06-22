@@ -5,14 +5,12 @@
 
 package gui.paineis;
 
-import com.vaadin.event.MouseEvents.ClickEvent;
 import entidades.Reserva;
 import com.vaadin.event.MouseEvents.ClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 import java.util.ArrayList;
 
 
@@ -46,7 +44,7 @@ public class PainelDia extends Panel{
 
         textoDia = new Label(Integer.toString(dia));
         textoRes = new Label();
-        textoRes.setCaption(Integer.toString(reservasDesteDia.size()) + " reservas");
+        textoRes.setCaption(Integer.toString(reservasDesteDia.size()) + " reserva(s)");
         leiaute.addComponent(textoDia);
         //leiaute.setComponentAlignment(textoDia, Alignment.TOP_LEFT);
         leiaute.addComponent(textoRes);

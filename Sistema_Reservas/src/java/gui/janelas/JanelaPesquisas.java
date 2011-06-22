@@ -150,9 +150,6 @@ public class JanelaPesquisas extends Window
             painelBotoes.setEnabled(false);
             pesquisaRecursosSala.setVisible(true);
         }
-
     }
-
-
 
 }

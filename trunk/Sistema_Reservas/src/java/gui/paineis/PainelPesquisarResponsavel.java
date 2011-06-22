@@ -74,6 +74,7 @@ public class PainelPesquisarResponsavel extends Panel{
     
     private class EventoPesquisaResponsavel implements Button.ClickListener
     {
+        @Override
         public void buttonClick(Button.ClickEvent event) {
             int i = 0;
             ArrayList<Reserva> res = reservaDAO.pesquisar();
@@ -82,9 +83,8 @@ public class PainelPesquisarResponsavel extends Panel{
                 Reserva r = res.remove(0);
                 if (r.getSala().getNumero() == Integer.parseInt((String)sala.getValue()))
                 {
-                    resultados.addItem(
-                            new Object[] {r.getResponsavel()},++i
-                                    );
+                    resultados.addItem( new Object[] {
+                                                        r.getResponsavel()},++i);
                 }
             }
             

@@ -1,0 +1,1 @@
+Trabalho da cadeira de Java -  Um sistema de reserva de salas que guarda tambem os recursos de cada sala para consulta previa.
